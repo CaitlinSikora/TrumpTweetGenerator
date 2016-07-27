@@ -1,0 +1,29 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>This is trump's page</h1>
+    <script type="text/javascript">
+    function set_trump_mood(mood, pr)
+    {
+        m = mood.search('<username>');
+        if (m != -1) {
+            // openid requires username
+            mood = mood.substr(0, m);
+        }
+        form = document.forms['trumper'];
+        form.elements['mood'].value = mood;
+    }
+    </script>
+    <h1>Enter your TRUMP-MOOD</h1>
+    <form action="" method="post" name="trumper">
+        <p>
+            Please enter your trump-mood, or select one of the moods below:<br>
+            {{ form.mood(size=80) }}
+            {% for error in form.mood.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+        </p>
+        <p><input type="submit" value="submit"></p>
+    </form>
+{% endblock %}

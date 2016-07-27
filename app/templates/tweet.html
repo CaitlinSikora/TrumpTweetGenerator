@@ -1,0 +1,135 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .word {
+            display: inline-block;
+            padding: 0px 1px 0px 1px;
+            max-width: 60%;
+ /*           position: relative;
+            text-align: center;
+            display: inline-block;
+            margin: 40px 100px;
+            vertical-align: middle;;
+            line-height: 0; 
+            font-size: 30px;
+            font-family: 'Fjalla One';
+            opacity: 1;
+            z-index: 999;*/
+        }
+      .genertweet {
+        margin-right: auto;
+        margin-left:auto;
+        margin-top: 10px;
+        min-height: 380px;
+        padding: 10px;
+        position: relative;
+        display: block;
+        background-size: cover;
+        color: white;
+        overflow: hidden;
+      }
+      .scrape_image {
+        z-index: 1;
+        position: absolute;
+        text-align: center;
+        vertical-align: middle;
+        margin: 0 auto;
+        padding: 0;
+        opacity: 0.5;
+        background-size: cover;
+      }
+      .genertweet p {
+        margin: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        color: white;
+        text-align:left;
+        opacity: 1;
+        z-index:999;
+        font-size: 14px;
+      }
+      .genertweet h3 {
+        position: relative;
+        text-align: center;
+        display: inline-block;
+        margin: 40px 100px;
+        vertical-align: middle;;
+        line-height: 0; 
+        font-size: 30px;
+        font-family: 'Fjalla One';
+        opacity: 1;
+        z-index: 999;
+      }
+      #background_image {
+           height: auto;
+           left: 0;
+           margin: 0;
+           min-width: 674px;
+           padding: 0;
+           position: absolute;
+           top: 0;
+           width: 100%;
+           z-index: -1;
+           background-size: cover;
+        }
+    </style>
+    <div class="genertweet">
+
+        <div class="scraped_images_in" id="background_image"></div>
+        <div class="scraped_images_out" id="background_image"></div>
+            <p>
+               Your tweet referenced {{ num_ref }} original tweets. Hover over the words to see where they came from.
+            </p>
+            <h3>
+                {% for word in tweet %}
+            	<div class="word" id = {{ word }}> {{ word }} </div>
+                {% endfor %}
+            </h3>
+    </div>
+    <div class="origtweet">
+        
+    </div>
+    <script type="text/javascript" >
+        var references = {{ references|tojson }};
+        var tweet_list = {{ tweet|tojson }};
+        var back_img = {{ back_img|tojson }};
+        var the_word = tweet_list[0];
+        var prev_img = ''; 
+        var show_orig = '<p></p>';
+        var scrape_img = '<img style="opacity:0.5;" src="static/trump.jpg" border="0" alt="">';
+        $('.scraped_images_in').html(scrape_img);
+        $('.origtweet').html(show_orig);
+        console.log(the_word);
+        $('.word').mouseover(function(){
+            $('.scraped_images_out').html('');
+            the_word = $(this).attr('id');
+            console.log(references[the_word].orig_date);
+            show_orig = '<p>On '+references[the_word].orig_date+' at '+references[the_word].orig_time+', Trump tweeted: <em>'+references[the_word].orig_text+'</em></p><p>Your tweet borrowed: <em>'+references[the_word].words_used.join(', ')+'</em></p>'
+            $('.origtweet').html(show_orig);
+            console.log(references[the_word].imp_words)
+            //$('.scraped_images_out').attr("style","opacity:0;");
+            prev_img = scrape_img;
+            scrape_img = '';
+            /*for (var i=0;i<references[the_word].imgs.length;i++){
+                scrape_img += '<img style="opacity:'+1.0/references[the_word].imgs.length+';" src='+references[the_word].imgs[i]+'>';
+            }*/
+            for (var i=0;i<3;i++){
+                scrape_img += '<img id="background_image" style="opacity:'+0.6+';" src='+ back_img[(references[the_word].orig_text.length+i)%3]+' border="0" alt="">';
+            }
+            console.log(scrape_img);
+            if (scrape_img == ''){
+                scrape_img = '<img style="opacity:0.5;" src="static/trump.jpg" border="0" alt="">';
+            }
+            if (prev_img != scrape_img){
+
+                //$('.scraped_images_out').html(prev_img);
+                $('.scraped_images_in').html(scrape_img);
+            }
+            
+            prev_text = references[the_word].orig_text;
+        });
+    </script>
+{% endblock %}

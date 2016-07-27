@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+      <link href='https://fonts.googleapis.com/css?family=Londrina+Shadow' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Playfair+Display+SC:400,700,900' rel='stylesheet' type='text/css'>
+      <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700' rel='stylesheet' type='text/css'>
+    <script src="static/jquery.min.js"></script>
+    <style>
+    body {
+        font-family: 'Fjalla One';
+        margin: 0 auto;
+        color: #bbbbbb;
+        max-width: 90%;
+      }
+        canvas {
+          margin:-400px 100px 0 0;
+            vertical-align: top;
+            z-index:1;
+        }
+        .bottom{
+            margin: 0 auto;
+        }
+        div {
+        background-size: cover;
+        position: relative;
+        margin: 40px 0 40px 0;
+        border-radius: 12px;
+      }
+      h1 {
+        font-family: 'Playfair Display SC', serif;
+        text-align: center;
+        font-size: 55px;
+        color: #aaaaaa;
+        margin: 36px 0 0 0;
+      }
+      h2 {
+        text-align: center;
+        color: #bbbbbb;
+        margin: 7px 0 20px 0;
+        font-family: 'Fjalla One';
+        font-size: 20px;
+      }
+      
+    </style>
+    {% if title %}
+    <title>{{ title }} - microblog</title>
+    {% else %}
+    <title>microblog</title>
+    {% endif %}
+  </head>
+  <body>
+    <h1><b>{{ title }}</b></h1>
+    <h2>Making America great again, one tweet at a time</h2>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }} </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </body>
+</html>
