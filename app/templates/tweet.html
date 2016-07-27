@@ -15,20 +15,21 @@
         margin-right: auto;
         margin-left:auto;
         margin-top: 10px;
-        min-height: 380px;
+        min-height: 370px;
         padding: 10px;
-        position: relative;
+        /*position: relative;*/
         display: inline-flex;
         background-size: cover;
         color: white;
         overflow: hidden;
         text-align: center;
+        width: 90%;
       }
       #genertext {
-        padding: 0 130;
+        padding: 0px 130px 15px;
         line-height: 1;
         vertical-align: middle;
-        margin: auto 5px;
+        margin: auto;
       }
       .scrape_image {
         z-index: 1;
@@ -74,7 +75,20 @@
            z-index: -1;
            background-size: cover;
         }
-
+        .origtweet {
+            margin: -35px 0px 0px;
+            line-height:1.2;
+            display:inline;
+            font-size:16px;
+        }
+        .origtweet p {
+            text-align: left;
+            margin: 7px 0;
+        }
+        .origtweet span {
+            text-align: right;
+            margin: 0 10px;
+        }
     </style>
     <div class="genertweet">
 
@@ -90,7 +104,6 @@
             </div>
     </div>
     <div class="origtweet">
-        
     </div>
     <script type="text/javascript" >
         var references = {{ references|tojson }};
@@ -107,7 +120,7 @@
             $('.scraped_images_out').html('');
             the_word = $(this).attr('id');
             console.log(references[the_word].orig_date);
-            show_orig = '<p>On '+references[the_word].orig_date+' at '+references[the_word].orig_time+', Trump tweeted: <em>'+references[the_word].orig_text+'</em></p><p>Your tweet borrowed: <em>'+references[the_word].words_used.join(', ')+'</em></p>'
+            show_orig = '<p>On '+references[the_word].orig_date+' at '+references[the_word].orig_time+', Trump tweeted: <em>'+references[the_word].orig_text+'</em></p><p>Image searched key terms: <em>'+ references[the_word].imp_words.join(', ')+'</em><span>Your tweet borrowed: <em>'+references[the_word].words_used.join(', ')+'</em></span></p>'
             $('.origtweet').html(show_orig);
             console.log(references[the_word].imp_words)
             //$('.scraped_images_out').attr("style","opacity:0;");
