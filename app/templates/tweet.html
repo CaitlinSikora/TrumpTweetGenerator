@@ -4,19 +4,12 @@
 {% block content %}
     <style>
         .word {
-            display: inline-block;
+            display: inline;
             padding: 0px 1px 0px 1px;
             max-width: 60%;
- /*           position: relative;
-            text-align: center;
-            display: inline-block;
-            margin: 40px 100px;
-            vertical-align: middle;;
-            line-height: 0; 
-            font-size: 30px;
-            font-family: 'Fjalla One';
+            position: relative;
             opacity: 1;
-            z-index: 999;*/
+            z-index: 999;
         }
       .genertweet {
         margin-right: auto;
@@ -25,10 +18,17 @@
         min-height: 380px;
         padding: 10px;
         position: relative;
-        display: block;
+        display: inline-flex;
         background-size: cover;
         color: white;
         overflow: hidden;
+        text-align: center;
+      }
+      #genertext {
+        padding: 0 130;
+        line-height: 1;
+        vertical-align: middle;
+        margin: auto 5px;
       }
       .scrape_image {
         z-index: 1;
@@ -54,10 +54,9 @@
       .genertweet h3 {
         position: relative;
         text-align: center;
-        display: inline-block;
-        margin: 40px 100px;
-        vertical-align: middle;;
-        line-height: 0; 
+        display: inline;
+        vertical-align: middle;
+        line-height: 2; 
         font-size: 30px;
         font-family: 'Fjalla One';
         opacity: 1;
@@ -75,6 +74,7 @@
            z-index: -1;
            background-size: cover;
         }
+
     </style>
     <div class="genertweet">
 
@@ -83,11 +83,11 @@
             <p>
                Your tweet referenced {{ num_ref }} original tweets. Hover over the words to see where they came from.
             </p>
-            <h3>
+            <div id="genertext">
                 {% for word in tweet %}
-            	<div class="word" id = {{ word }}> {{ word }} </div>
+            	<div class="word" id = {{ word }}><h3> {{ word }} </h3></div>
                 {% endfor %}
-            </h3>
+            </div>
     </div>
     <div class="origtweet">
         
