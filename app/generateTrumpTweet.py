@@ -64,7 +64,7 @@ def generate_tweet(model):
 	close_quotes = 0
 
 	while True:
-		next_word = random.choice(model[(word1,word2)])
+		next_word = random.choice(model[str((word1,word2))])
 		word1, word2  = word2, next_word[0]
 		new_word = next_word[0].replace(u"“", "\"")
 		new_word = new_word.replace(u"”", "\"")
