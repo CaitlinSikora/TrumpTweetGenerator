@@ -39,7 +39,7 @@ def login():
 
 @app.route('/tweet', methods=['GET', 'POST'])
 def tweeter():
-    new_tweet = generate_tweet(pickle.load(open('app/static/trumpAllModel.p')))
+    new_tweet = generate_tweet(json.load(open('app/static/trumpAllModel.json')))
     return render_template('tweet.html',
                            title='Trump Tweet Generator',
                            tweet=new_tweet[0], 
