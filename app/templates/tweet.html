@@ -63,7 +63,7 @@
         opacity: 1;
         z-index: 999;
       }
-      #background_image {
+      .background_image {
            height: auto;
            left: 0;
            margin: 0;
@@ -93,17 +93,14 @@
 
     <div class="genertweet">
 
-        <div id="background_image">
-            {% for image in back_img %}
-                <img id="background_image" style="opacity:0.85/2;" src= {{ image }} border="0" alt="">
-            {% endfor %}
+        <div class="background_image">
         </div>
             <p>
                Your tweet referenced {{ num_ref }} original tweets. Hover over the words to see where they came from.
             </p>
             <div id="genertext">
                 {% for word in tweet %}
-            	<div class="word" id = {{ word }}><h3> {{ word }} </h3></div>
+            	<div class="word" id = {{ word[1] }}><h3> {{ word[0] }} </h3></div>
                 {% endfor %}
             </div>
     </div>
@@ -115,14 +112,32 @@
         var references = {{ references|tojson }};
         var tweet_list = {{ tweet|tojson }};
         var back_img = {{ back_img|tojson }};
+        console.log(references);
+        var the_word;
+
+        show_img = '<img class="background_image" style="opacity:0.6;" id="back-up" src="static/trump.jpg" border="0" alt="">'
+        // backup images
+        /*for (i=0;i<back_img.length;i++){
+            show_img += '<img class="background_image" style="opacity:0.3;" id="' + i + '" src=' + back_img[i] + ' border="0" alt="">'
+        }*/
+        // scraped images
+        for (var key_name in references) {
+            the_word = key_name;
+            for (j=0;j<references[the_word].imgs.length;j++){
+                show_img += '<img class="background_image" style="opacity:0;" id="' + the_word + '" src=' + references[the_word].imgs[j] + ' border="0" alt="">'
+            }
+        }
+        console.log(show_img);
+        $('.background_image').html(show_img);
+        var img_in, img_out;
+        img_in = "back-up";
 
         // initialize the_word, prev_img, show_orig, and scrape_img
-        var the_word = tweet_list[0];
         var prev_img = ''; 
         var show_orig = '<p></p>';
-        var scrape_img = '<img style="opacity:0.5;" src="static/trump.jpg" border="0" alt="">';
+        //var scrape_img = '<img style="opacity:0.5;" src="static/trump.jpg" border="0" alt="">';
         // send html
-        $('#background_image').html(scrape_img);
+        //$('#background_image').html(scrape_img);
         $('.origtweet').html(show_orig);
         console.log(the_word);
 
@@ -130,12 +145,28 @@
         $('.word').mouseover(function(){
             // get the word and update orig_tweet html
             the_word = $(this).attr('id');
+            console.log(references[the_word].words_used);
             show_orig = '<p>On '+references[the_word].orig_date+' at '+references[the_word].orig_time+', Trump tweeted: <em>'+references[the_word].orig_text+'</em></p><p>Image searched key terms: <em>'+ references[the_word].imp_words.join(', ')+'</em><span>Your tweet borrowed: <em>'+references[the_word].words_used.join(', ')+'</em></span></p>'
             $('.origtweet').html(show_orig);
 
-            console.log(references[the_word].imp_words)
+            img_out = img_in;
+            img_in = the_word; 
+            opacity = 0.8/references[the_word].imgs.length;
+            if (references[the_word].imgs.length==0){
+                img_in = "back-up";
+                opacity = 0.7;
+            }
+            if (img_in != img_out){
+                $('#'+img_out).attr("style","opacity:"+0+";");
+                console.log("image out "+ img_out);
+            }
+            $('#'+img_in).attr("style","opacity:"+opacity+";");
+            console.log(references[the_word].imp_words);
+            console.log(references[the_word].imgs);
+            console.log(opacity);
+            console.log("imagee in "+img_in);
             //$('.scraped_images_out').attr("style","opacity:0;");
-            prev_img = scrape_img;
+            /*prev_img = scrape_img;
             scrape_img = '';
 
             // send image data of scraped images for dynamic loading
@@ -144,7 +175,7 @@
             }*/
 
             // set image data of preset images for dynamic loading
-            for (var i=0;i<2;i++){
+            /*for (var i=0;i<2;i++){
                 scrape_img += '<img id="background_image" style="opacity:'+0.85/2+';" src='+ back_img[(references[the_word].orig_text.length+i)%3]+' border="0" alt="">';
             }
             console.log(scrape_img);
@@ -158,7 +189,7 @@
 
                 //$('.scraped_images_out').html(prev_img);
                 $('#background_image').html(scrape_img);
-            }
+            }*/
             
             prev_text = references[the_word].orig_text;
         });
