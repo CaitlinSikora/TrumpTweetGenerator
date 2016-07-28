@@ -15,7 +15,7 @@ def grab_images_google(key_word):
 
     # Key codes we created earlier for the Google CustomSearch API
     search_engine_id = '015037131198447628591:7g7ithuxakq'
-    api_key = 'AIzaSyBy8oibtBr1kJu4UEL6uVOXkh-IHS9AHzs'
+    api_key = 'AIzaSyAFjKNFRy13MnMvYUYA36kzTfPdGTrPEEk'
     
     # The build function creates a service object. It takes an API name and API 
     # version as arguments. 
@@ -75,8 +75,7 @@ def grab_widest(results):
         if (item['image']['width']/item['image']['height'])>max_aspect_ratio:
           max_aspect_ratio = item['image']['width']/item['image']['height']
           max_link = item['link']
-
-        return max_link
+    return max_link
 
 def grab_wide(results):
     parsed = json.loads(results)
@@ -93,7 +92,7 @@ def grab_wide(results):
             ind = randint(0,len(links)-1)
             return links[ind]
     else:
-        return []
+        return None
 
 #api-key: AIzaSyBTg-ed_rVXHl4khSn8EXB3wC-F6-IP6tM or AIzaSyBy8oibtBr1kJu4UEL6uVOXkh-IHS9AHzs or AIzaSyAFjKNFRy13MnMvYUYA36kzTfPdGTrPEEk
 #search-engine-id: 015037131198447628591:7g7ithuxakq

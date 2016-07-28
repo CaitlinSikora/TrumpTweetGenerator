@@ -84,7 +84,9 @@ def find_unique_words(tweet):
 def grab_links(key_words):
 	links = []
 	for key_word in key_words:
-		links.append(grab_wide(grab_images(key_word)))
+		new_link = grab_wide(grab_images(key_word))
+		if new_link:
+			links.append(new_link)
 	return links
 
 #the_tweet = "It's Tuesday. How many more 'The View' Execs will leak that they want @rosie gone? Show is failing."
