@@ -15,7 +15,7 @@ def grab_images_google(key_word):
 
     # Key codes we created earlier for the Google CustomSearch API
     search_engine_id = '015037131198447628591:7g7ithuxakq'
-    api_key = 'AIzaSyAFjKNFRy13MnMvYUYA36kzTfPdGTrPEEk'
+    api_key = 'AIzaSyBTg-ed_rVXHl4khSn8EXB3wC-F6-IP6tM'
     
     # The build function creates a service object. It takes an API name and API 
     # version as arguments. 

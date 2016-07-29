@@ -115,7 +115,7 @@
         console.log(references);
         var the_word;
 
-        show_img = '<img class="background_image" style="opacity:0.6;" id="back-up" src="static/trump.jpg" border="0" alt="">'
+        show_img = '<img class="background_image back-up" style="opacity:0.6;" src="static/trump.jpg" border="0" alt="">'
         // backup images
         /*for (i=0;i<back_img.length;i++){
             show_img += '<img class="background_image" style="opacity:0.3;" id="' + i + '" src=' + back_img[i] + ' border="0" alt="">'
@@ -124,7 +124,7 @@
         for (var key_name in references) {
             the_word = key_name;
             for (j=0;j<references[the_word].imgs.length;j++){
-                show_img += '<img class="background_image" style="opacity:0;" id="' + the_word + '" src=' + references[the_word].imgs[j] + ' border="0" alt="">'
+                show_img += '<img class="background_image '+the_word+'"" style="opacity:0;" " src=' + references[the_word].imgs[j] + ' border="0" alt="">'
             }
         }
         console.log(show_img);
@@ -151,20 +151,20 @@
 
             img_out = img_in;
             img_in = the_word; 
-            opacity = 0.8/references[the_word].imgs.length;
+            opacity = 0.6/references[the_word].imgs.length;
             if (references[the_word].imgs.length==0){
                 img_in = "back-up";
-                opacity = 0.7;
+                opacity = 0.6;
             }
             if (img_in != img_out){
-                $('#'+img_out).attr("style","opacity:"+0+";");
+                $('.'+img_out).attr("style","opacity:"+0+";");
                 console.log("image out "+ img_out);
             }
-            $('#'+img_in).attr("style","opacity:"+opacity+";");
+            $('.'+img_in).attr("style","opacity:"+opacity+";");
             console.log(references[the_word].imp_words);
             console.log(references[the_word].imgs);
             console.log(opacity);
-            console.log("imagee in "+img_in);
+            console.log("image in "+img_in);
             //$('.scraped_images_out').attr("style","opacity:0;");
             /*prev_img = scrape_img;
             scrape_img = '';
