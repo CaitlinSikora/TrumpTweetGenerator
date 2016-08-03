@@ -2,10 +2,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hi, {{ user.nickname }}!</h1>
-    {% for post in list_posts %}
-    <p>
-      {{ post.author.nickname }} says: <b>{{ post.body }}</b>
-    </p>
-    {% endfor %}
+	<style>
+	.row_image {
+            display: inline;
+            margin: 30px 10px;
+            width: 330px;
+            max-height:220px;
+            position: relative;
+            opacity: 0.8;
+            z-index: 999;
+            border-radius: 25px;
+        }
+    .row_images {
+    	margin: 40px 30px 30px;
+    }
+    .explain {
+    	display: inline-flex;
+    	max-width: 65%;
+    	margin: 10px 0 10px;
+    }
+    </style>
+
+	<div class="row_images">
+	<p class="explain">Not known for his consistency on the issues, Trump tweets very differently from moment to moment. To preserve the most authentic Trump experience, we've made our tweets cater to their audience.</p>
+	<h2>Choose your favorite Trump:</h2>
+		<img src="static/angrytrump.jpg" class="row_image">
+		<img src="static/neutraltrump.jpg" class="row_image">
+		<img src="static/happytrump.jpg" class="row_image">
+	</div>
+	<p>The Trump Tweet Machine was created to give voters and spectators a window into the mind of the Republican candidate for president of the United States.</p>
 {% endblock %}
