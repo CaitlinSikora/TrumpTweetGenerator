@@ -2,7 +2,28 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <style>
+      .axis path, .axis line
+        {
+            fill: none;
+            stroke: #777;
+            shape-rendering: crispEdges;
+        }
+        
+        .axis text
+        {
+            font-family: 'Arial';
+            font-size: 13px;
+        }
+        .tick
+        {
+            stroke-dasharray: 1, 2;
+        }
+        .bar
+        {
+            fill: FireBrick;
+        }
         .word {
             display: inline;
             padding: 0px 1px 0px 1px;
@@ -100,11 +121,15 @@
             </p>
             <div id="genertext">
                 {% for word in tweet %}
-            	<div class="word" id = {{ word[1] }}><h3> {{ word[0] }} </h3></div>
+            	<div class="word" id={{ word[1] }} text={{ word[0] }}><h3> {{ word[0] }} </h3></div>
                 {% endfor %}
             </div>
     </div>
     <div class="origtweet">
+    </div>
+
+    <div class="plot_word">
+
     </div>
 
     <script type="text/javascript" >
@@ -117,27 +142,24 @@
 
         show_img = '<img class="background_image back-up" style="opacity:0.6;" src="static/trump.jpg" border="0" alt="">'
         // backup images
-        /*for (i=0;i<back_img.length;i++){
+        for (i=0;i<back_img.length;i++){
             show_img += '<img class="background_image" style="opacity:0.3;" id="' + i + '" src=' + back_img[i] + ' border="0" alt="">'
-        }*/
+        }
         // scraped images
-        for (var key_name in references) {
+        /*for (var key_name in references) {
             the_word = key_name;
             for (j=0;j<references[the_word].imgs.length;j++){
                 show_img += '<img class="background_image '+the_word+'"" style="opacity:0;" " src=' + references[the_word].imgs[j] + ' border="0" alt="">'
             }
-        }
+        }*/
         console.log(show_img);
         $('.background_image').html(show_img);
         var img_in, img_out;
         img_in = "back-up";
 
-        // initialize the_word, prev_img, show_orig, and scrape_img
+        // initialize the_word, prev_img, show_orig
         var prev_img = ''; 
         var show_orig = '<p></p>';
-        //var scrape_img = '<img style="opacity:0.5;" src="static/trump.jpg" border="0" alt="">';
-        // send html
-        //$('#background_image').html(scrape_img);
         $('.origtweet').html(show_orig);
         console.log(the_word);
 
@@ -145,11 +167,12 @@
         $('.word').mouseover(function(){
             // get the word and update orig_tweet html
             the_word = $(this).attr('id');
+            console.log($(this).attr('text'));
             console.log(references[the_word].words_used);
             show_orig = '<p>On '+references[the_word].orig_date+' at '+references[the_word].orig_time+', Trump tweeted: <em>'+references[the_word].orig_text+'</em></p><p>Image searched key terms: <em>'+ references[the_word].imp_words.join(', ')+'</em><span>Your tweet borrowed: <em>'+references[the_word].words_used.join(', ')+'</em></span></p>'
             $('.origtweet').html(show_orig);
 
-            img_out = img_in;
+            /*img_out = img_in;
             img_in = the_word; 
             opacity = 0.6/references[the_word].imgs.length;
             if (references[the_word].imgs.length==0){
@@ -164,34 +187,100 @@
             console.log(references[the_word].imp_words);
             console.log(references[the_word].imgs);
             console.log(opacity);
-            console.log("image in "+img_in);
-            //$('.scraped_images_out').attr("style","opacity:0;");
-            /*prev_img = scrape_img;
-            scrape_img = '';
+            console.log("image in "+img_in);*/
+        });
 
-            // send image data of scraped images for dynamic loading
-            /*for (var i=0;i<references[the_word].imgs.length;i++){
-                scrape_img += '<img style="opacity:'+0.85/references[the_word].imgs.length+';" src='+references[the_word].imgs[i]+'>';
-            }*/
+        $('.word').click(function(){
+            // get the word and update orig_tweet html
+            search_word = $(this).attr('text').toLowerCase().replace(":", "").replace(".", "").replace(",", "").replace("?", "").replace("!", "").replace('"', '');
+            console.log(search_word);
+            $('.plot_word').html('<svg id="visualisation" width="1000" height="500"></svg>');
 
-            // set image data of preset images for dynamic loading
-            /*for (var i=0;i<2;i++){
-                scrape_img += '<img id="background_image" style="opacity:'+0.85/2+';" src='+ back_img[(references[the_word].orig_text.length+i)%3]+' border="0" alt="">';
+            InitChart();
+
+            function InitChart() {
+
+              var allData = {{ counts|tojson }};
+              var wordData = allData[search_word];
+              var barData = wordData[1];
+              console.log(wordData);
+              console.log(barData);
+
+              var vis = d3.select('#visualisation'),
+                WIDTH = 1000,
+                HEIGHT = 400,
+                MARGINS = {
+                  top: 20,
+                  right: 20,
+                  bottom: 20,
+                  left: 50
+                },
+                xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+                  return d.x;
+                })),
+
+
+                yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+                  d3.max(barData, function (d) {
+                    return d.y;
+                  })
+                ]),
+
+                xAxis = d3.svg.axis()
+                    .tickFormat(function(d) { 
+
+                                if(d%100==1){ 
+                                    return Math.floor(d/100)}
+
+                                else{ 
+                                    return }
+                            })    
+                  .scale(xRange)
+                  .tickSize(5)
+                  .tickSubdivide(true)
+                  .ticks(10),
+
+                yAxis = d3.svg.axis()
+                  .scale(yRange)
+                  .tickSize(5)
+                  .orient("left")
+                  .tickSubdivide(true);
+
+                  vis.append('svg:g')
+                    .attr('class', 'x axis')
+                    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+                    .call(xAxis);
+
+                  vis.append('svg:g')
+                    .attr('class', 'y axis')
+                    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+                    .call(yAxis);
+
+                  vis.selectAll('rect')
+                    .data(barData)
+                    .enter()
+                    .append('rect')
+                    .attr('x', function (d) {
+                      return xRange(d.x);
+                    })
+                    .attr('y', function (d) {
+                      return yRange(d.y);
+                    })
+                    .attr('width', xRange.rangeBand())
+                    .attr('height', function (d) {
+                      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+                    })
+                    .attr('fill', 'grey')
+                    .on('mouseover',function(d){
+                      d3.select(this)
+                        .attr('fill','blue');
+                    })
+                    .on('mouseout',function(d){
+                      d3.select(this)
+                        .attr('fill','grey');
+                    });
+
             }
-            console.log(scrape_img);
-            // if no images were scraped, set backup image
-            if (scrape_img == ''){
-                scrape_img = '<img style="opacity:0.5;" src="static/trump.jpg" border="0" alt="">';
-            }
-
-            // if new image data is availavle, send it to the html
-            if (prev_img != scrape_img){
-
-                //$('.scraped_images_out').html(prev_img);
-                $('#background_image').html(scrape_img);
-            }*/
-            
-            prev_text = references[the_word].orig_text;
         });
     </script>
 {% endblock %}

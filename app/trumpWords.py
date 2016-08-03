@@ -25,14 +25,28 @@ def get_entities():
     #print "person=", person
 
 def find_word_data(key_word):
+	key_word = tokenize_tweet(key_word)[0]
+	print "This is YOUR KEY WORD:"
+	print key_word
 	file_name = 'app/static/'+'TrumpWordsDict.json'
 	with open(file_name,'r') as f:
 		data = f.read()
 	dict_words = json.loads(data)
 	count_dates = collections.Counter()
-	count_dates.update([item['date_ind'] for item in dict_words[key_word]])
-
-	return len(dict_words[key_word]), count_dates
+	word_entries = sorted(dict_words[key_word], key=itemgetter('date_ind'))
+	count_dates.update([item['date_ind'] for item in word_entries])
+	new_list=[]
+	for j in range(1,13):
+		for i in range(2009,2017):
+			date = j+(100*i)
+			if date in count_dates:
+				new_list.append({'x':date,'y':count_dates[date],'date':'a_Date'})
+			elif date in [200901, 200902, 200903,200904, 201608, 201609, 201610, 201611, 201612]:
+				print "exception"
+			else:
+				new_list.append({'x':date,'y':0,'date':'a_Date'})
+	new_list = sorted(new_list, key=itemgetter('x'))
+	return len(dict_words[key_word]), new_list
 
 def find_unique_words(tweet):
 	toktweet = tokenize_tweet(tweet)
