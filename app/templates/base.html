@@ -37,24 +37,11 @@
       }
       
     </style>
-    {% if title %}
-    <title>{{ title }} - microblog</title>
-    {% else %}
-    <title>microblog</title>
-    {% endif %}
+    <title>{{ title }}</title>
   </head>
   <body>
     <h1><b>{{ title }}</b></h1>
-    <h2>Making America great again, one tweet at a time</h2>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-    {% for message in messages %}
-        <li>{{ message }} </li>
-    {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
+    <h2>{{ slogan }}</h2>
     {% block content %}{% endblock %}
   </body>
 </html>

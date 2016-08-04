@@ -11,7 +11,8 @@ import json
 @app.route('/index')
 def index():
     return render_template('index.html',
-                           title='Trump Tweet Machine')
+                           title='Presidential Tweet Machine',
+                           slogan="Our most important decision, with the help of Twitter")
 
 @app.route('/data')
 def datavis():
@@ -33,14 +34,30 @@ def login():
                            form=form,
                            providers=app.config['OPENID_PROVIDERS'])
 
-@app.route('/tweet', methods=['GET', 'POST'])
-def tweeter():
-    models = ['app/static/trumpNegModel.json','app/static/trumpNeutralModel.json','app/static/trumpPosModel.json']
-    new_tweet = generate_tweet(json.load(open('app/static/trumpAllModel.json')))
+@app.route('/trump', methods=['GET', 'POST'])
+def trump():
+    candidate = 'Trump'
+    new_tweet = generate_tweet(candidate)
     return render_template('tweet.html',
                            title='Trump Tweet Machine',
+                           slogan='Making America great again, one tweet at a time',
+                           candidate='Trump',
                            tweet=new_tweet[0], 
                            references=new_tweet[1],
                            num_ref = new_tweet[2],
                            counts= new_tweet[3],
-                           back_img = ['https://static1.squarespace.com/static/55fa115ee4b01a082ee73da3/t/56b8f028c6fc088f59af8713/1454960683612/solar-panels.jpg','http://departed.co/wp-content/uploads/2016/03/Barack-Obama.jpg','http://static2.politico.com/dims4/default/56c2277/2147483647/resize/1160x%3E/quality/90/?url=http%3A%2F%2Fs3-origin-images.politico.com%2F2015%2F07%2F24%2F150723_trump_ap3_1160.jpg'])
+                           back_img = ['static/trump.jpg','static/trump2.jpg','static/trump3.jpg','static/trump4.jpg','static/trump5.jpg'])
+
+@app.route('/clinton', methods=['GET', 'POST'])
+def clinton():
+    candidate = 'HillaryClinton'
+    new_tweet = generate_tweet(candidate)
+    return render_template('tweet.html',
+                           title='Clinton Tweet Machine',
+                           candidate='Clinton',
+                           slogan="I'm with her... on Twitter, and we're also stronger together",
+                           tweet=new_tweet[0], 
+                           references=new_tweet[1],
+                           num_ref = new_tweet[2],
+                           counts= new_tweet[3],
+                           back_img = ['static/clinton4.jpg','static/clinton.jpg','static/clinton3.jpg','static/clinton5.jpg','static/clinton2.jpg'])

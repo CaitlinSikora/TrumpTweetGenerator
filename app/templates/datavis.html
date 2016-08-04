@@ -8,25 +8,33 @@
       .axis path, .axis line
         {
             fill: none;
-            stroke: #777;
+            stroke: #e1e1e1;
+            stroke-width:0.5;
+            /*stroke-dasharray: 1;*/
             shape-rendering: crispEdges;
         }
         
         .axis text
-        {
-            font-family: 'Arial';
-            font-size: 13px;
+        {	
+        	fill:#e1e1e1;
+        	stroke:none;
+            font-family: 'Fjalla One';
+            font-size: 10px;
         }
         .tick
-        {
-            stroke-dasharray: 1, 2;
+        {	
+            stroke:#e1e1e1;
+            /*stroke-dasharray: 1,2;*/
         }
         .bar
         {
             fill: FireBrick;
+            border-radius: 1px;
+            border:1px solid;
+            z-index:999;
         }
 </style>
-<svg id="visualisation" width="1000" height="500"></svg>
+<svg id="visualisation" width="1000" height="360"></svg>
 <script>
 InitChart();
 
@@ -36,7 +44,7 @@ function InitChart() {
 
   var vis = d3.select('#visualisation'),
     WIDTH = 1000,
-    HEIGHT = 400,
+    HEIGHT = 360,
     MARGINS = {
       top: 20,
       right: 20,
@@ -64,16 +72,21 @@ function InitChart() {
 	                    return }
 	            })    
       .scale(xRange)
-      .tickSize(5)
+      .tickSize(3)
       .tickSubdivide(true)
       .ticks(10),
 
     yAxis = d3.svg.axis()
       .scale(yRange)
-      .tickSize(5)
+      .tickSize(3)
       .orient("left")
       .tickSubdivide(true);
 
+  vis.append("rect")
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("fill", "grey")
+    .attr({ry:'12', rx:'12'});
 
   vis.append('svg:g')
     .attr('class', 'x axis')
@@ -99,17 +112,19 @@ function InitChart() {
     .attr('height', function (d) {
       return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
     })
-    .attr('fill', 'grey')
+    .attr({ry:'3', rx:'3'})
+    .attr('fill', '#e1e1e1')
     .on('mouseover',function(d){
       d3.select(this)
-        .attr('fill','blue');
+        .attr('fill','#a5a0a9');
     })
     .on('mouseout',function(d){
       d3.select(this)
-        .attr('fill','grey');
+        .attr('fill','#e1e1e1');
     });
 
 }
+
 </script>
 
 {% endblock %}

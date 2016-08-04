@@ -12,43 +12,30 @@ from image_grab import grab_wide, grab_widest, grab_images
 def tokenize_tweet(tweet):
 	return TweetTokenizer().tokenize(tweet.lower())
 
-def get_entities():
-    qry = "It's Tuesday. How many terrible predictions and advice will Karl 1.6% Rove make today?"
-    tokens = nltk.tokenize.word_tokenize(qry)
-    pos = nltk.pos_tag(tokens)
-    sentt = nltk.ne_chunk(pos, binary = False)
-    #print sentt
-    person = []
-    for subtree in sentt.subtrees(filter=lambda t: t.node == 'PERSON'):
-        for leave in subtree.leaves():
-            person.append(leave)
-    #print "person=", person
-
-def find_word_data(key_word):
-	key_word = tokenize_tweet(key_word)[0]
-	print "This is YOUR KEY WORD:"
-	print key_word
-	file_name = 'app/static/'+'TrumpWordsDict.json'
+def find_word_data(key_word,candidate):
+	key_word = key_word.lower().replace(":", "").replace(".", "").replace(",", "").replace("?", "").replace("!", "").replace('"', '')
+	file_name = 'app/static/'+candidate+'WordsDict.json'
 	with open(file_name,'r') as f:
 		data = f.read()
 	dict_words = json.loads(data)
 	count_dates = collections.Counter()
-	word_entries = sorted(dict_words[key_word], key=itemgetter('date_ind'))
-	count_dates.update([item['date_ind'] for item in word_entries])
-	new_list=[]
-	for j in range(1,13):
-		for i in range(2009,2017):
-			date = j+(100*i)
-			if date in count_dates:
-				new_list.append({'x':date,'y':count_dates[date],'date':'a_Date'})
-			elif date in [200901, 200902, 200903,200904, 201608, 201609, 201610, 201611, 201612]:
-				print "exception"
-			else:
-				new_list.append({'x':date,'y':0,'date':'a_Date'})
-	new_list = sorted(new_list, key=itemgetter('x'))
-	return len(dict_words[key_word]), new_list
+	if key_word in dict_words:
+		word_entries = sorted(dict_words[key_word], key=itemgetter('date_ind'))
+		count_dates.update([item['date_ind'] for item in word_entries])
+		new_list=[]
+		for j in range(1,13):
+			for i in range(2009,2017):
+				date = j+(100*i)
+				if date in count_dates:
+					new_list.append({'x':date,'y':count_dates[date],'date':'a_Date'})
+				else:
+					new_list.append({'x':date,'y':0,'date':'a_Date'})
+		new_list = sorted(new_list, key=itemgetter('x'))
+		return len(dict_words[key_word]), new_list
+	else:
+		return
 
-def find_unique_words(tweet):
+def find_unique_words(tweet,candidate):
 	toktweet = tokenize_tweet(tweet)
 	pos_tagged = nltk.pos_tag(tweet.split())
 	#print pos_tagged
@@ -60,7 +47,7 @@ def find_unique_words(tweet):
 	propernouns = [tokenize_tweet(word.lower())[0] for word,pos in pos_tagged if pos == 'NNP']
 	#print propernouns
 	
-	file_name = 'app/static/'+'TrumpWordsDict.json'
+	file_name = 'app/static/'+candidate+'WordsDict.json'
 	with open(file_name,'r') as f:
 		data = f.read()
 	dict_words = json.loads(data)
@@ -102,10 +89,6 @@ def grab_links(key_words):
 		if new_link:
 			links.append(new_link)
 	return links
-
-#the_tweet = "It's Tuesday. How many more 'The View' Execs will leak that they want @rosie gone? Show is failing."
-#print grab_links(find_unique_words(the_tweet))
-
 
 '''weeks = count_dates.keys()
 instances = [count_dates[week] for week in weeks]'''

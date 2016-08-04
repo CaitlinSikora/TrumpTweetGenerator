@@ -5,14 +5,14 @@
 	<style>
 	.row_image {
             display: inline;
-            margin: 30px 10px;
+            margin: 30px 30px;
             width: 330px;
-            max-height:220px;
             position: relative;
-            opacity: 0.8;
-            z-index: 999;
-            border-radius: 25px;
+            opacity: 0.7;
         }
+    .row_image:hover {
+        opacity: 1;
+    }
     .row_images {
     	margin: 40px 30px 30px;
     }
@@ -24,11 +24,9 @@
     </style>
 
 	<div class="row_images">
-	<p class="explain">Not known for his consistency on the issues, Trump tweets very differently from moment to moment. To preserve the most authentic Trump experience, we've made our tweets cater to their audience.</p>
-	<h2>Choose your favorite Trump:</h2>
-		<img src="static/angrytrump.jpg" class="row_image">
-		<img src="static/neutraltrump.jpg" class="row_image">
-		<img src="static/happytrump.jpg" class="row_image">
+	<h2>Click to hear from your favorite candidate:</h2>
+		<a href="/clinton"><img src="static/clinton_circle.png" class="row_image"></a>
+		<a href="/trump"><img src="static/trump_circle.png" class="row_image"></a>
 	</div>
-	<p>The Trump Tweet Machine was created to give voters and spectators a window into the mind of the Republican candidate for president of the United States.</p>
+	<p>The Trump Tweet Machine was created to give voters and spectators a window into the minds of the candidates for president of the United States.</p>
 {% endblock %}
