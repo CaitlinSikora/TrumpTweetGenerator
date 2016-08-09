@@ -5,7 +5,7 @@ import nltk
 from nltk.tokenize import TweetTokenizer
 import nltk.tag
 import collections
-import math
+import math, random
 from operator import itemgetter
 from image_grab import grab_wide, grab_widest, grab_images
 
@@ -82,13 +82,28 @@ def find_unique_words(tweet,candidate):
 	print final_list
 	return [item[0] for i,item in enumerate(final_list) if i<2 or item[1]>1]
 
-def grab_links(key_words):
+def grab_links(key_words, candidate):
+	back_up_links = {'HillaryClinton':['static/clinton4.jpg',
+										'static/clinton.jpg',
+										'static/clinton3.jpg',
+										'static/clinton5.jpg',
+										'static/clinton2.jpg'],
+					'Trump':['static/trump.jpg',
+							'static/trump2.jpg',
+							'static/trump3.jpg',
+							'static/trump4.jpg',
+							'static/trump5.jpg']}
 	links = []
 	for key_word in key_words:
 		new_link = grab_wide(grab_images(key_word))
 		if new_link:
 			links.append(new_link)
-	return links
+	if len(links)>0:
+		return links
+	else:
+		index = random.randint(0,4)
+		links.append(back_up_links[candidate][index])
+		return links
 
 '''weeks = count_dates.keys()
 instances = [count_dates[week] for week in weeks]'''

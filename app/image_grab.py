@@ -7,7 +7,7 @@ from random import randint
 #import BeautifulSoup
 #import urllib2
 
-def grab_images_google(key_word):
+def grab_images_google(key_word, api):
     # Create an output file name in the format "srch_res_yyyyMMdd_hhmmss.json"
     now_sfx = dt.datetime.now().strftime('%Y%m%d_%H%M%S')
     search_term = key_word
@@ -15,8 +15,8 @@ def grab_images_google(key_word):
 
     # Key codes we created earlier for the Google CustomSearch API
     search_engine_id = '015037131198447628591:7g7ithuxakq'
-    api_key = 'AIzaSyAFjKNFRy13MnMvYUYA36kzTfPdGTrPEEk'
-    
+    api_key = api
+
     # The build function creates a service object. It takes an API name and API 
     # version as arguments. 
     service = build('customsearch', 'v1', developerKey=api_key)
@@ -24,13 +24,11 @@ def grab_images_google(key_word):
     # because the CustomSearch API page tells us cse "Returns the cse Resource".
     collection = service.cse()
 
-    for i in range(0, num_requests):
-        # This is the offset from the beginning to start getting the results from
-        start_val = 1 + (i * 10)
-        # Make an HTTP request object
+    try:
+    # Make an HTTP request object
         request = collection.list(q=search_term,
             num=10, #this is the maximum & default anyway
-            start=start_val,
+            start=1,
             cx=search_engine_id,
             searchType='image',
             imgSize='xxlarge',
@@ -38,38 +36,26 @@ def grab_images_google(key_word):
         )
         response = request.execute()
         if response:
-            output = json.dumps(response, sort_keys=True, indent=2)
-            return output
-        else:
-            return None
-
-def grab_images_bing(key_word):
-    '''url = 'https://www.instagram.com/explore/tags/'+keyword+'/?hl=en'
-    soup = BeautifulSoup(urllib2.urlopen(url).read(),'html5lib')
-    elems = soup('script')
-    for elem in elems:
-        elem = elem.innerHTML()
-        if elem[:10] == "window._sh":
-            elem = elem[:-1]
-            elem = elem.split()
-            combed_body = [item for item in elem]
-    urls = []
-    for i,item in enumerate(combed_body):
-        if item == '"display_src":':
-            urls.append(combed_body[i+1].split('"')[1])'''
-    return None
+            #output = json.dumps(response, sort_keys=True, indent=2)
+            return response
+    except:
+        return None
 
 def grab_images(key_word):
-    google = grab_images_google(key_word)
-    print key_word
-    print google
-    if google!=None:
-        return google
-    else:
-        return grab_images_bing(key_word)
+    apis = ['AIzaSyBTg-ed_rVXHl4khSn8EXB3wC-F6-IP6tM','AIzaSyBy8oibtBr1kJu4UEL6uVOXkh-IHS9AHzs','AIzaSyAFjKNFRy13MnMvYUYA36kzTfPdGTrPEEk']
+    print "Searched", key_word
+    print "key 0"
+    google = grab_images_google(key_word,apis[0])
+    if not google:
+        print "key 1"
+        google = grab_images_google(key_word,apis[1])
+        if not google:
+            print "key 2"
+            google = grab_images_google(key_word,apis[2])
+    return google
 
 def grab_widest(results):
-    parsed = json.loads(results)
+    parsed = results
     max_aspect_ratio = 0
     for item in parsed['items']:
         if (item['image']['width']/item['image']['height'])>max_aspect_ratio:
@@ -78,9 +64,11 @@ def grab_widest(results):
     return max_link
 
 def grab_wide(results):
-    parsed = json.loads(results)
-    tester = parsed['queries']['request']
-    print tester
+    if results == None:
+        return None
+    parsed = results
+    tester = results['queries']['request']
+    # print tester
     if tester[0]['totalResults']!='0'and tester[0]['totalResults']>0:
         links = []
         for item in parsed['items']:

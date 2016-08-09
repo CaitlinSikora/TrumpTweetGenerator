@@ -22,13 +22,11 @@ def print_stamps(stamps,candidate):
 		original_text = tweet['text']
 		if stamp[0] not in stamp_dict:
 			important_words = find_unique_words(original_text,candidate)
-			images = grab_links(important_words)
+			images = grab_links(important_words, candidate)
 			stamp_dict[stamp[0]]=important_words,images
-			print important_words
-			print stamp[0]
+			print "found images for: ", important_words
+			#print stamp[0]
 		else:
-			important_words = stamp_dict[stamp[0]][0]
-			print important_words
 			images = stamp_dict[stamp[0]][1]
 		orig_dict[stamp[0].replace(' ','').replace(':','').replace('-','')]={
 			'sort_date': datetime.datetime.strptime(date, '%d %b %Y').isoformat(),
@@ -188,11 +186,10 @@ def generate_tweet(candidate):
 		the_tweet.append((word,references[1][word]))
 	word_data = {}
 	for word in new_tweet:
-		print word
+		print "original word", word
 		this_word = word.lower().replace(":", "").replace(".", "").replace(",", "").replace("?", "").replace("!", "").replace('"', '')
-		print this_word
+		print "searching data on this word", this_word
 		word_data[this_word]=find_word_data(this_word,candidate)
-	print word_data
 	return the_tweet, references[0], len(references[0]), word_data
 
 
