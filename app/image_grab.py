@@ -44,14 +44,11 @@ def grab_images_google(key_word, api):
 def grab_images(key_word):
     apis = ['AIzaSyBTg-ed_rVXHl4khSn8EXB3wC-F6-IP6tM','AIzaSyBy8oibtBr1kJu4UEL6uVOXkh-IHS9AHzs','AIzaSyAFjKNFRy13MnMvYUYA36kzTfPdGTrPEEk']
     print "Searched", key_word
-    print "key 0"
-    google = grab_images_google(key_word,apis[0])
-    if not google:
-        print "key 1"
-        google = grab_images_google(key_word,apis[1])
+    google = None
+    for i,key in enumerate(apis):
         if not google:
-            print "key 2"
-            google = grab_images_google(key_word,apis[2])
+            print "key", i
+            google = grab_images_google(key_word,apis[i])
     return google
 
 def grab_widest(results):

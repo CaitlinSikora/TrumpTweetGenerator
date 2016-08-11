@@ -5,7 +5,24 @@ from operator import itemgetter
 import datetime
 from trumpWords import find_unique_words, grab_links, tokenize_tweet, find_word_data
 
-def print_stamps(stamps,candidate):
+def open_year_files(candidate, min_year, max_year):
+	year_dict = {}
+	for i in range(min_year,max_year+1):
+	 	file_name = 'app/static/'+str(i)+candidate+'.json'
+	 	with open(file_name,'r') as f:
+	 		data = f.read()
+	 	parsed = json.loads(data)
+	 	year_dict[str(i)]=parsed
+	return year_dict
+
+def open_word_file(candidate):
+	file_name = 'app/static/'+candidate+'WordsDict.json'
+	with open(file_name,'r') as f:
+		data = f.read()
+	dict_words = json.loads(data)
+	return dict_words
+
+def print_stamps(stamps,candidate,year_dict,dict_words):
 	word_dict = {}
 	orig_dict = {}
 	stamp_dict= {}
@@ -14,14 +31,14 @@ def print_stamps(stamps,candidate):
 		time = stamp[0].split(' - ')[0]
 		date = stamp[0].split(' - ')[1]
 		orig_date = ' '.join([date.split()[1]+'.',date.split()[0]+',',date.split()[2]])
-		file_name = 'app/static/'+year+candidate+'.json'
-		with open(file_name,'r') as f:
-			data = f.read()
-		parsed = json.loads(data)
+		# file_name = 'app/static/'+year+candidate+'.json'
+		# with open(file_name,'r') as f:
+		# 	data = f.read()
+		parsed = year_dict[year]
 		tweet = next((item for item in parsed if item['timestamp'] == stamp[0]), None)
 		original_text = tweet['text']
 		if stamp[0] not in stamp_dict:
-			important_words = find_unique_words(original_text,candidate)
+			important_words = find_unique_words(original_text,candidate,dict_words)
 			images = grab_links(important_words, candidate)
 			stamp_dict[stamp[0]]=important_words,images
 			print "found images for: ", important_words
@@ -41,10 +58,13 @@ def print_stamps(stamps,candidate):
 			word_dict[word]=stamp[0].replace(' ','').replace(':','').replace('-','')
 	return orig_dict, word_dict
 
-def generate_tweet(candidate):
+def generate_tweet(candidate,min_year,max_year):
 	model = json.load(open('app/static/'+candidate+'Model.json'))
 	new_tweet = []
 	stamps = {}
+
+	year_dict = open_year_files(candidate, min_year, max_year)
+	dict_words = open_word_file(candidate)
 
 	word1 = "BEGIN"
 	word2 = "HERE"
@@ -181,7 +201,7 @@ def generate_tweet(candidate):
 		prev_key.append((next_word[1],next_word[2]))
 
 	the_tweet = []
-	references = print_stamps(stamps,candidate)
+	references = print_stamps(stamps,candidate,year_dict,dict_words)
 	for word in new_tweet:
 		the_tweet.append((word,references[1][word]))
 	word_data = {}
@@ -189,7 +209,7 @@ def generate_tweet(candidate):
 		print "original word", word
 		this_word = word.lower().replace(":", "").replace(".", "").replace(",", "").replace("?", "").replace("!", "").replace('"', '')
 		print "searching data on this word", this_word
-		word_data[this_word]=find_word_data(this_word,candidate)
+		word_data[this_word]=find_word_data(this_word,candidate,dict_words)
 	return the_tweet, references[0], len(references[0]), word_data
 
 

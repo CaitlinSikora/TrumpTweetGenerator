@@ -1,437 +1,506 @@
 <!-- extend base layout -->
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<style>
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #e1e1e1;
+    stroke-width: 0.5;
+    /*stroke-dasharray: 1;*/
+    shape-rendering: crispEdges;
+    stroke-linecap: round;
+}
 
-{% block content %}
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <style>
-      .axis path, .axis line
-        {
-            fill: none;
-            stroke: #e1e1e1;
-            stroke-width:0.5;
-            /*stroke-dasharray: 1;*/
-            shape-rendering: crispEdges;
-            stroke-linecap: round;
-        }
-        
-        .axis text
-        {   
-            fill:#e1e1e1;
-            stroke:none;
-            font-family: 'Fjalla One';
-            font-size: 10px;
-        }
-        .tick
-        {   
-            stroke:#e1e1e1;
-            /*stroke-dasharray: 1,2;*/
-        }
-        .bar
-        {
-            fill: FireBrick;
-            border-radius: 1px;
-            border:1px solid;
-            z-index:999;
-        }
-        .plot_word {
-            opacity: 0.6;
-           height: auto;
-           left: 0;
-           min-width: 674px;
-           padding: 0;
-           position: absolute;
-           top: 0;
-           width: 100%;
-           margin: 0;
-           background-size: cover;
-           padding: 10px;
-           vertical-align: middle;
-        }
+.axis text {
+    fill: #e1e1e1;
+    stroke: none;
+    font-family: 'Fjalla One';
+    font-size: 10px;
+}
 
-      .plot_word p {
-        margin: 0;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        color: white;
-        text-align:left;
-        opacity: 1;
-        font-size: 14px;
-/*        z-index:99;
-*/      }
-      .plot_word h3 {
-        position: relative;
-        text-align: center;
-        display: inline;
-        vertical-align: middle;
-        line-height: 2; 
-        font-size: 30px;
-        font-family: 'Fjalla One';
-        opacity: 1;
-/*        z-index:99;
-*/      }
-        .word {
-            display: inline;
-            padding: 0px 1px 0px 1px;
-            max-width: 60%;
-            position: relative;
-            opacity: 0.85;
-/*            z-index: 999;
-*/        }
-      .genertweet {
-        margin-right: auto;
-        margin-left:auto;
-        margin-top: 10px;
-        height: 400px;
-        padding: 10px;
-        /*position: relative;*/
-        display: inline-flex;
-        background-size: cover;
-        color: white;
-        overflow: hidden;
-        text-align: center;
-        width: 90%;
-      }
-      #genertext {
-        padding: 0px 130px 15px;
-        line-height: 1;
-        vertical-align: middle;
-        margin: auto;
-        z-index:99;
-      }
-      .scrape_image {
-        z-index: 1;
-        position: absolute;
-        text-align: center;
-        vertical-align: middle;
-        margin: 0 auto;
-        padding: 0;
-        opacity: 0.5;
-        background-size: cover;
-      }
-      .genertweet p {
-        margin: 0;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        color: white;
-        text-align:left;
-        opacity: 0.85;
-/*        z-index:999;
-*/        font-size: 14px;
-      }
-      .genertweet h3 {
-        position: relative;
-        text-align: center;
-        display: inline;
-        vertical-align: middle;
-        line-height: 2; 
-        font-size: 30px;
-        font-family: 'Fjalla One';
-        opacity: 0.85;
-/*        z-index: 999;
-*/      }
-      .background_image {
-           height: auto;
-           left: 0;
-           margin: 0;
-           min-width: 674px;
-           padding: 0;
-           position: absolute;
-           top: 0;
-           width: 100%;/*
+.tick {
+    stroke: #e1e1e1;
+    /*stroke-dasharray: 1,2;*/
+}
+
+.bar {
+    fill: FireBrick;
+    border-radius: 1px;
+    border: 1px solid;
+    z-index: 999;
+}
+
+.plot_word {
+    opacity: 0.6;
+    height: auto;
+    left: 0;
+    min-width: 674px;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    background-size: cover;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.plot_word p {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: left;
+    opacity: 1;
+    font-size: 14px;
+    /*        z-index:99;
+*/
+}
+
+.plot_word h3 {
+    position: relative;
+    text-align: center;
+    display: inline;
+    vertical-align: middle;
+    line-height: 2;
+    font-size: 30px;
+    font-family: 'Fjalla One';
+    opacity: 1;
+    /*        z-index:99;
+*/
+}
+
+.word {
+    display: inline;
+    padding: 0px 1px 0px 1px;
+    max-width: 60%;
+    position: relative;
+    opacity: 0.85;
+    /*            z-index: 999;
+*/
+}
+
+.genertweet {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    height: 400px;
+    padding: 10px;
+    /*position: relative;*/
+    display: inline-flex;
+    background-size: cover;
+    color: white;
+    overflow: hidden;
+    text-align: center;
+    width: 90%;
+}
+
+#genertext {
+    padding: 0px 130px 15px;
+    line-height: 1;
+    vertical-align: middle;
+    margin: auto;
+    z-index: 99;
+}
+
+.scrape_image {
+    z-index: 1;
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 auto;
+    padding: 0;
+    opacity: 0.5;
+    background-size: cover;
+}
+
+.genertweet p {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: left;
+    opacity: 0.85;
+    /*        z-index:999;
+*/
+    font-size: 14px;
+}
+
+.genertweet h3 {
+    position: relative;
+    text-align: center;
+    display: inline;
+    vertical-align: middle;
+    line-height: 2;
+    font-size: 30px;
+    font-family: 'Fjalla One';
+    opacity: 0.85;
+    /*        z-index: 999;
+*/
+}
+
+.background_image {
+    height: auto;
+    left: 0;
+    margin: 0;
+    min-width: 674px;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    /*
            z-index: -1;*/
-           background-size: cover;
-        }
-        .origtweet {
-            margin: -35px 0px 0px;
-            line-height:1.2;
-            display:inline;
-            font-size:16px;
-        }
-        .origtweet p {
-            text-align: left;
-            margin: 7px 0;
-        }
-        .origtweet span {
-            text-align: right;
-            margin: 0 10px;
-        }
-        .an_icon {
-            position:absolute;
-            right: 5px;
-            margin: 5px;
-            display:inline;
-            opacity: 0.7;
-            z-index:999;
-        }
-        .an_icon img {
-            width:20px;
-            max-height:20px;
-        }
-        #visualisation {
-            z-index:999;
-        }
-        #chart_image {
-            display:block;
-        }
-        .other_candidate {
-            position:absolute;
-            right: 20px;
-            bottom: 20px;
-            margin: 3px;
-            display:inline;
-            opacity: 0.7;
-            color: white;
-            font-size:11px;
-        }
-        .other_candidate:hover {
-            color: #bbbbbb;
-            -webkit-transition: color 500ms ease-out;
-            -moz-transition: color 500ms ease-out;
-            -o-transition: color 500ms ease-out;
-            transition: color 500ms ease-out;
-        }
-        .other_candidate img {
-            width:34px;
-            max-height:34px;
-              -webkit-filter: grayscale(100%);
-              -moz-filter: grayscale(100%); 
-              -o-filter: grayscale(100%);
-            -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
-            -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
-            -o-transition: width 500ms ease-out, max-height 500ms ease-out;
-            transition: width 500ms ease-out, max-height 500ms ease-out;
-        }
-        .other_candidate img:hover {
-              -webkit-filter: grayscale(0%);
-              -moz-filter: grayscale(0%);
-              -o-filter: grayscale(0%);
-              width: 50px;
-              max-height:50px;
-            -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
-            -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
-            -o-transition: width 500ms ease-out, max-height 500ms ease-out;
-            transition: width 500ms ease-out, max-height 500ms ease-out;
-        }
-    </style>
-    <div class="genertweet">
-            <div class="an_icon" id="imageicon" ><img src="static/imageicon.png" border="0" alt=""></div>
-            <div class="an_icon" style="right:33px;" id="charticon"><img src="static/charticon.png" border="0" alt=""></div>
+    background-size: cover;
+}
 
+.origtweet {
+    margin: 0px 25px 0px 25px;
+    line-height: 1.2;
+    display: inline;
+    font-size: 16px;
+}
+
+.origtweet p {
+    text-align: left;
+    margin: 7px 44px 0px 44px;
+}
+
+.origtweet span {
+    text-align: right;
+    margin: 0 10px;
+}
+
+.an_icon {
+    position: absolute;
+    right: 5px;
+    margin: 5px;
+    display: inline;
+    opacity: 0.7;
+    z-index: 999;
+}
+
+.an_icon img {
+    width: 20px;
+    max-height: 20px;
+}
+
+#homeicon:hover {
+    opacity: 1;
+}
+
+#visualisation {
+    z-index: 999;
+}
+
+#chart_image {
+    display: block;
+}
+
+/*.other_candidate {
+    opacity: 0.7;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+}
+
+#clinton_click {
+    left: 10px;
+    bottom: 10px;
+    position: absolute;
+    margin: 3px;
+    display: inline;
+    opacity: 0.7;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+}
+
+#trump_click {
+    right: 10px;
+    bottom: 10px;
+    position: absolute;
+    margin: 3px;
+    display: inline;
+    opacity: 0.7;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+}
+
+#trump_click:hover {
+    color: #bbbbbb;
+    -webkit-transition: color 500ms ease-out;
+    -moz-transition: color 500ms ease-out;
+    -o-transition: color 500ms ease-out;
+    transition: color 500ms ease-out;
+}
+
+#clinton_click:hover {
+    color: #bbbbbb;
+    -webkit-transition: color 500ms ease-out;
+    -moz-transition: color 500ms ease-out;
+    -o-transition: color 500ms ease-out;
+    transition: color 500ms ease-out;
+}
+
+.other_candidate img {
+    width: 34px;
+    max-height: 34px;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
+    -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
+    -o-transition: width 500ms ease-out, max-height 500ms ease-out;
+    transition: width 500ms ease-out, max-height 500ms ease-out;
+}
+
+.other_candidate img:hover {
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    width: 50px;
+    max-height: 50px;
+    -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
+    -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
+    -o-transition: width 500ms ease-out, max-height 500ms ease-out;
+    transition: width 500ms ease-out, max-height 500ms ease-out;
+}*/
+</style>
+    <!-- <div class="an_icon" id="homeicon" style="top:20px;"><a href="/index"><img src="static/homeicon.png" style="width:24px; max-height:24px;" border="0" alt=""></a></div> -->
+<!-- <div id="clinton_click">
+    <p>NEW Clinton tweet!</p>
+    <a href="/clinton">
+        <div class="other_candidate"><img src="static/clinton_circle.png"></div>
+    </a>
+</div>
+<div id="trump_click">
+    <p>NEW Trump tweet!</p>
+    <a href="/trump">
+        <div class="other_candidate"><img src="static/trump_circle.png"></div>
+    </a>
+</div> -->
+<div class="genertweet">
+    <div class="an_icon" id="imageicon"><img src="static/imageicon.png" border="0" alt=""></div>
+    <div class="an_icon" style="right:33px;" id="charticon"><img src="static/charticon.png" border="0" alt=""></div>
     <span id="chart_image"></span>
-        <!-- <div class="plot_word"></div> -->
-            <span id="up-top">
+    <!-- <div class="plot_word"></div> -->
+    <span id="up-top">
             </span>
-            <div id="genertext">
-                {% for word in tweet %}
-            	<div class="word" id={{ word[1] }} text={{ word[0] }}><h3> {{ word[0] }} </h3></div>
-                {% endfor %}
-            </div>
+    <div id="genertext">
+        {% for word in tweet %}
+        <div class="word" id={{ word[1] }} text={{ word[0] }}>
+            <h3> {{ word[0] }} </h3></div>
+        {% endfor %}
     </div>
-    <div class="origtweet"></div>
-    <div class="other_candidate">
-    </div>
+</div>
+<div class="origtweet"></div>
+<script type="text/javascript">
+// if ("{{ candidate }}" == "Trump"){
+//     $('.other_candidate').html('<p>Hear from me!</p><a href="/clinton"><img src="static/clinton_circle.png"></a>');
+// } else {
+//     $('.other_candidate').html('<p>Hear from me!</p><a href="/trump"><img src="static/trump_circle.png"></a>');
+// }
 
-    <script type="text/javascript" >
-        if ("{{ candidate }}" == "Trump"){
-            $('.other_candidate').html('<p>Hear from me!</p><a href="/clinton"><img src="static/clinton_circle.png"></a>');
-        } else {
-            $('.other_candidate').html('<p>Hear from me!</p><a href="/trump"><img src="static/trump_circle.png"></a>');
-        }
+// load data
+var references = {{ references | tojson }};
+var tweet_list = {{ tweet | tojson }};
+var back_img = {{ back_img | tojson }};
+var the_word;
+var chart = false;
 
-        // load data
-        var references = {{ references|tojson }};
-        var tweet_list = {{ tweet|tojson }};
-        var back_img = {{ back_img|tojson }};
-        var the_word;
-        var chart = false;
-
-        // create switch between chart and image
-        // load initial background image and text
+// create switch between chart and image
+// load initial background image and text
+$('#chart_image').html('<div class="background_image"></div>');
+$('#up-top').html('<p>Your tweet referenced {{ num_ref }} original tweets. Hover over the words to see where they came from.</p>');
+// chart or image?
+$('.an_icon').mouseover(function() {
+    if ($(this).attr("id") == "charticon") {
+        $(this).attr("style", "opacity:1; right:33px;");
+    } else if ($(this).attr("id") == "imageicon") {
+        $(this).attr("style", "opacity:1;");
+    }
+});
+$('.an_icon').mouseleave(function() {
+    if ($(this).attr("id") == "charticon") {
+        $(this).attr("style", "opacity:0.7; right:33px;");
+    } else if ($(this).attr("id") == "imageicon") {
+        $(this).attr("style", "opacity:0.7;");
+    }
+});
+$('.an_icon').click(function() {
+    console.log("click");
+    var which = $(this).attr('id');
+    console.log(which);
+    if (which == "imageicon") {
         $('#chart_image').html('<div class="background_image"></div>');
-        $('#up-top').html('<p>Your tweet referenced {{ num_ref }} original tweets. Hover over the words to see where they came from.</p>');
-        // chart or image?
-        $('.an_icon').mouseover(function(){
-            if ($(this).attr("id")=="charticon"){
-                $(this).attr("style","opacity:1; right:33px;");
-            } else {
-                $(this).attr("style","opacity:1;");
-            }
-        });
-        $('.an_icon').mouseleave(function(){
-            if ($(this).attr("id")=="charticon"){
-                $(this).attr("style","opacity:0.7; right:33px;");
-            } else {
-                $(this).attr("style","opacity:0.7;");
-            }
-        });
-        $('.an_icon').click(function(){
-            console.log("click");
-            var which = $(this).attr('id');
-            console.log(which);
-            if (which =="imageicon"){
-                $('#chart_image').html('<div class="background_image"></div>');
-                $('.background_image').html(show_img);
-                $('#up-top').html('<p>Your tweet referenced {{ num_ref }} original tweets. Hover over the words to see where they came from.</p>');
-                chart = false;
-                console.log("image");
-            } else {
-                $('#chart_image').html('<div class="plot_word"></div>');
-                $('.plot_word').html('<svg id="visualisation" width="1000" height="400"></svg>');
-                $('#up-top').html('<p>Click on a word to see how {{ candidate }} has used it on twitter.</p>');
-                $('.plot_word').attr("style","background-image:url("+back_img[0]+");");
-                chart = true;
-                console.log("chart");
-            }
-        });
-
-        show_img = '<img class="background_image back-up" style="opacity:0.5;" src='+back_img[1]+' border="0" alt=""><img class="background_image" style="opacity:0.15;" src='+back_img[3]+' border="0" alt="">'
-        // set show_img for scraped images
-        for (var key_name in references) {
-            the_word = key_name;
-            for (j=0;j<references[the_word].imgs.length;j++){
-                show_img += '<img class="background_image '+the_word+'"" style="opacity:0;" " src=' + references[the_word].imgs[j] + ' border="0" alt="">'
-            }
-        }
         $('.background_image').html(show_img);
-        var img_in, img_out;
+        $('#up-top').html('<p>Your tweet referenced {{ num_ref }} original tweets. Hover over the words to see where they came from.</p>');
+        chart = false;
+        console.log("image");
+    } else {
+        $('#chart_image').html('<div class="plot_word"></div>');
+        $('.plot_word').html('<svg id="visualisation" width="1000" height="400"></svg>');
+        $('#up-top').html('<p>Click on a word to see how {{ candidate }} has used it on twitter.</p>');
+        $('.plot_word').attr("style", "background-image:url(" + back_img[0] + ");");
+        chart = true;
+        console.log("chart");
+    }
+});
+
+show_img = '<img class="background_image back-up" style="opacity:0.5;" src=' + back_img[1] + ' border="0" alt=""><img class="background_image" style="opacity:0.15;" src=' + back_img[3] + ' border="0" alt="">'
+    // set show_img for scraped images
+for (var key_name in references) {
+    the_word = key_name;
+    for (j = 0; j < references[the_word].imgs.length; j++) {
+        show_img += '<img class="background_image ' + the_word + '"" style="opacity:0;" " src=' + references[the_word].imgs[j] + ' border="0" alt="">'
+    }
+}
+$('.background_image').html(show_img);
+var img_in, img_out;
+img_in = "back-up";
+
+// initialize the_word, prev_img, show_orig
+var prev_img = '';
+var show_orig = '<p></p>';
+$('.origtweet').html(show_orig);
+
+// mouse-over the_word
+$('.word').mouseover(function() {
+    $(this).attr("style", "opacity: 1;");
+    // get the word and update orig_tweet html
+    the_word = $(this).attr('id');
+    show_orig = '<p>On ' + references[the_word].orig_date + ' at ' + references[the_word].orig_time + ', {{ candidate }} tweeted: <em>' + references[the_word].orig_text + '</em></p><p>Image searched key terms: <em>' + references[the_word].imp_words.join(', ') + '</em><span>Your tweet borrowed: <em>' + references[the_word].words_used.join(', ') + '</em></span></p>'
+    $('.origtweet').html(show_orig);
+
+    // change image on hover for scraped images
+    img_out = img_in;
+    img_in = the_word;
+    opacity = 0.6 / references[the_word].imgs.length;
+    if (references[the_word].imgs.length == 0) {
         img_in = "back-up";
+        opacity = 0.6;
+    }
+    if (img_in != img_out) {
+        $('.' + img_out).attr("style", "opacity:" + 0 + ";");
+        console.log("image out " + img_out);
+    }
+    $('.' + img_in).attr("style", "opacity:" + opacity + ";");
+    console.log(references[the_word].imp_words);
+    console.log(references[the_word].imgs);
+    console.log(opacity);
+    console.log("image in " + img_in);
+});
 
-        // initialize the_word, prev_img, show_orig
-        var prev_img = ''; 
-        var show_orig = '<p></p>';
-        $('.origtweet').html(show_orig);
+$('.word').mouseleave(function() {
+    $(this).attr("style", "opacity: 0.85;");
+});
 
-        // mouse-over the_word
-        $('.word').mouseover(function(){
-            $(this).attr("style","opacity: 1;");
-            // get the word and update orig_tweet html
-            the_word = $(this).attr('id');
-            show_orig = '<p>On '+references[the_word].orig_date+' at '+references[the_word].orig_time+', {{ candidate }} tweeted: <em>'+references[the_word].orig_text+'</em></p><p>Image searched key terms: <em>'+ references[the_word].imp_words.join(', ')+'</em><span>Your tweet borrowed: <em>'+references[the_word].words_used.join(', ')+'</em></span></p>'
-            $('.origtweet').html(show_orig);
+$('.word').click(function() {
+    if (chart == true) {
+        // get the word and update orig_tweet html
+        search_word = $(this).attr('text').toLowerCase().replace(":", "").replace(".", "").replace(",", "").replace("?", "").replace("!", "").replace('"', '');
+        search_num = 0;
+        console.log(search_word);
+        $('.plot_word').html('<svg id="visualisation" width="1000" height="400"></svg>');
+        var back_num = Math.floor(Math.random() * back_img.length);
+        console.log(back_num);
+        console.log(back_img[back_num]);
+        $('.plot_word').attr("style", "background-image:url(" + back_img[back_num] + ");");
+        InitChart();
+        $('#up-top').html('<p>{{ candidate }} has tweeted ' + search_num + ' instances of the word <em>' + search_word + '</em>. Try clicking another word.</p>');
 
-            // change image on hover for scraped images
-            img_out = img_in;
-            img_in = the_word; 
-            opacity = 0.6/references[the_word].imgs.length;
-            if (references[the_word].imgs.length==0){
-                img_in = "back-up";
-                opacity = 0.6;
-            }
-            if (img_in != img_out){
-                $('.'+img_out).attr("style","opacity:"+0+";");
-                console.log("image out "+ img_out);
-            }
-            $('.'+img_in).attr("style","opacity:"+opacity+";");
-            console.log(references[the_word].imp_words);
-            console.log(references[the_word].imgs);
-            console.log(opacity);
-            console.log("image in "+img_in);
-        });
+        function InitChart() {
 
-        $('.word').mouseleave(function(){
-            $(this).attr("style","opacity: 0.85;");
-        });
-
-        $('.word').click(function(){
-            if (chart == true){
-                // get the word and update orig_tweet html
-                search_word = $(this).attr('text').toLowerCase().replace(":", "").replace(".", "").replace(",", "").replace("?", "").replace("!", "").replace('"', '');
-                search_num = 0;
-                console.log(search_word);
-                $('.plot_word').html('<svg id="visualisation" width="1000" height="400"></svg>');
-                var back_num = Math.floor(Math.random()*back_img.length);
-                console.log(back_num);
-                console.log(back_img[back_num]);
-                $('.plot_word').attr("style","background-image:url("+back_img[back_num]+");");
-                InitChart();
-                $('#up-top').html('<p>{{ candidate }} has tweeted '+search_num+' instances of the word <em>'+search_word+'</em>. Try clicking another word.</p>');
-                function InitChart() {
-
-                  var allData = {{ counts|tojson }};
-                  var wordData = allData[search_word];
-                  console.log(wordData);
-                  var barData = wordData[1];
-                  search_num = wordData[0];
-                  var vis = d3.select('#visualisation'),
-                    WIDTH = 1000,
-                    HEIGHT = 400,
-                    MARGINS = {
-                      top: 20,
-                      right: 20,
-                      bottom: 40,
-                      left: 50
-                    },
-                    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
-                      return d.x;
-                    })),
+            var allData = {{ counts | tojson }};
+            var wordData = allData[search_word];
+            console.log(wordData);
+            var barData = wordData[1];
+            search_num = wordData[0];
+            var vis = d3.select('#visualisation'),
+                WIDTH = 1000,
+                HEIGHT = 400,
+                MARGINS = {
+                    top: 20,
+                    right: 20,
+                    bottom: 40,
+                    left: 50
+                },
+                xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function(d) {
+                    return d.x;
+                })),
 
 
-                    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-                      d3.max(barData, function (d) {
+                yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+                    d3.max(barData, function(d) {
                         return d.y;
-                      })
-                    ]),
+                    })
+                ]),
 
-                    xAxis = d3.svg.axis()
-                        .tickFormat(function(d) { 
+                xAxis = d3.svg.axis()
+                .tickFormat(function(d) {
 
-                                    if(d%100==1){ 
-                                        return Math.floor(d/100)}
+                    if (d % 100 == 1) {
+                        return Math.floor(d / 100)
+                    } else {
+                        return
+                    }
+                })
+                .scale(xRange)
+                .tickSize(5)
+                .tickSubdivide(true)
+                .ticks(10),
 
-                                    else{ 
-                                        return }
-                                })    
-                      .scale(xRange)
-                      .tickSize(5)
-                      .tickSubdivide(true)
-                      .ticks(10),
+                yAxis = d3.svg.axis()
+                .scale(yRange)
+                .tickSize(5)
+                .orient("left")
+                .tickSubdivide(true);
 
-                    yAxis = d3.svg.axis()
-                      .scale(yRange)
-                      .tickSize(5)
-                      .orient("left")
-                      .tickSubdivide(true);
+            vis.append('svg:g')
+                .attr('class', 'x axis')
+                .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+                .call(xAxis);
 
-                      vis.append('svg:g')
-                        .attr('class', 'x axis')
-                        .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-                        .call(xAxis);
+            vis.append('svg:g')
+                .attr('class', 'y axis')
+                .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+                .call(yAxis);
 
-                      vis.append('svg:g')
-                        .attr('class', 'y axis')
-                        .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-                        .call(yAxis);
+            vis.selectAll('rect')
+                .data(barData)
+                .enter()
+                .append('rect')
+                .attr('x', function(d) {
+                    return xRange(d.x);
+                })
+                .attr('y', function(d) {
+                    return yRange(d.y);
+                })
+                .attr('width', xRange.rangeBand())
+                .attr('height', function(d) {
+                    return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+                })
+                .attr({
+                    ry: '3',
+                    rx: '3'
+                })
+                .attr('fill', '#dfdfdf')
+                .style("opacity", .65)
+                .on('mouseover', function(d) {
+                    d3.select(this)
+                        .attr('fill', 'white');
+                })
+                .on('mouseout', function(d) {
+                    d3.select(this)
+                        .attr('fill', '#dfdfdf');
+                });
 
-                      vis.selectAll('rect')
-                        .data(barData)
-                        .enter()
-                        .append('rect')
-                        .attr('x', function (d) {
-                          return xRange(d.x);
-                        })
-                        .attr('y', function (d) {
-                          return yRange(d.y);
-                        })
-                        .attr('width', xRange.rangeBand())
-                        .attr('height', function (d) {
-                          return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
-                        })
-                        .attr({ry:'3', rx:'3'})
-                        .attr('fill', '#dfdfdf')
-                        .style("opacity", .65)
-                        .on('mouseover',function(d){
-                          d3.select(this)
-                            .attr('fill','white');
-                        })
-                        .on('mouseout',function(d){
-                          d3.select(this)
-                            .attr('fill','#dfdfdf');
-                    });
-
-                }
-            }
-        });
-    </script>
+        }
+    }
+});
+</script>
 {% endblock %}

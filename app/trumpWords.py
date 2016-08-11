@@ -12,12 +12,13 @@ from image_grab import grab_wide, grab_widest, grab_images
 def tokenize_tweet(tweet):
 	return TweetTokenizer().tokenize(tweet.lower())
 
-def find_word_data(key_word,candidate):
+def find_word_data(key_word,candidate,word_data):
 	key_word = key_word.lower().replace(":", "").replace(".", "").replace(",", "").replace("?", "").replace("!", "").replace('"', '')
-	file_name = 'app/static/'+candidate+'WordsDict.json'
-	with open(file_name,'r') as f:
-		data = f.read()
-	dict_words = json.loads(data)
+	# file_name = 'app/static/'+candidate+'WordsDict.json'
+	# with open(file_name,'r') as f:
+	# 	data = f.read()
+	# dict_words = json.loads(data)
+	dict_words = word_data
 	count_dates = collections.Counter()
 	if key_word in dict_words:
 		word_entries = sorted(dict_words[key_word], key=itemgetter('date_ind'))
@@ -35,7 +36,7 @@ def find_word_data(key_word,candidate):
 	else:
 		return
 
-def find_unique_words(tweet,candidate):
+def find_unique_words(tweet,candidate,word_data):
 	toktweet = tokenize_tweet(tweet)
 	pos_tagged = nltk.pos_tag(tweet.split())
 	#print pos_tagged
@@ -47,10 +48,11 @@ def find_unique_words(tweet,candidate):
 	propernouns = [tokenize_tweet(word.lower())[0] for word,pos in pos_tagged if pos == 'NNP']
 	#print propernouns
 	
-	file_name = 'app/static/'+candidate+'WordsDict.json'
-	with open(file_name,'r') as f:
-		data = f.read()
-	dict_words = json.loads(data)
+	# file_name = 'app/static/'+candidate+'WordsDict.json'
+	# with open(file_name,'r') as f:
+	# 	data = f.read()
+	# dict_words = json.loads(data)
+	dict_words=word_data
 	count_occur = collections.Counter()
 	count_occur.update(toktweet)
 	unique = {}

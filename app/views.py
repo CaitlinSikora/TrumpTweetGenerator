@@ -14,30 +14,10 @@ def index():
                            title='Presidential Tweet Machine',
                            slogan="Our most important decision, with the help of Twitter")
 
-@app.route('/data')
-def datavis():
-    data = find_word_data('rubio')
-    return render_template('datavis.html',
-                           title='Trump Tweet Machine',
-                           total= data[0],
-                           counts = data[1])
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        flash('Login requested for OpenID="%s", remember_me=%s' %
-              (form.openid.data, str(form.remember_me.data)))
-        return redirect('/index')
-    return render_template('login.html',
-                           title='Sign In',
-                           form=form,
-                           providers=app.config['OPENID_PROVIDERS'])
-
 @app.route('/trump', methods=['GET', 'POST'])
 def trump():
     candidate = 'Trump'
-    new_tweet = generate_tweet(candidate)
+    new_tweet = generate_tweet(candidate,2009,2016)
     return render_template('tweet.html',
                            title='Trump Tweet Machine',
                            slogan='Making America great again, one tweet at a time',
@@ -51,11 +31,11 @@ def trump():
 @app.route('/clinton', methods=['GET', 'POST'])
 def clinton():
     candidate = 'HillaryClinton'
-    new_tweet = generate_tweet(candidate)
+    new_tweet = generate_tweet(candidate,2013,2016)
     return render_template('tweet.html',
                            title='Clinton Tweet Machine',
                            candidate='Clinton',
-                           slogan="I'm with her... on Twitter, and we're also stronger together",
+                           slogan="I'm with her... on Twitter, and also we're stronger together",
                            tweet=new_tweet[0], 
                            references=new_tweet[1],
                            num_ref = new_tweet[2],

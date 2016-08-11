@@ -1,32 +1,71 @@
 <!-- extend base layout -->
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<style>
+.row_image {
+    white-space: normal;
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+    width: 50% max-width: 180px;
+    margin: 0 auto;
+    padding: 3px 10px 3px 10px;
+    opacity:0.7;
+    border-radius: 12px;
+}
 
-{% block content %}
-	<style>
-	.row_image {
-            display: inline;
-            margin: 30px 30px;
-            width: 330px;
-            position: relative;
-            opacity: 0.7;
-        }
-    .row_image:hover {
-        opacity: 1;
-    }
-    .row_images {
-    	margin: 40px 30px 30px;
-    }
-    .explain {
-    	display: inline-flex;
-    	max-width: 65%;
-    	margin: 10px 0 10px;
-    }
-    </style>
+.row_image:hover {
+    opacity:0.9;
+}
+.row_image img {
+    display: block;
+    width: 360px;
+    max-height:300px;
+    z-index: 1;
+    margin: 5px;
+    border-radius: 12px;
+}
+.row_image p {
+    display: block;
+    position: relative;
+    text-align: center;
+    display: inline;
+    vertical-align: middle;
+    z-index: 99;
+    color: #aaaaaa;
+    font-family: 'Playfair Display SC', serif;
+}
+.row_images {
+    white-space: nowrap;
+    margin: 60px 45px 60px;
+    padding: 0 30px;
+    position: relative;
+    width: 100% max-width: 600px;
+    text-align: center;
+    vertical-align: middle;
+}
 
-	<div class="row_images">
-	<h2>Click to hear from your favorite candidate:</h2>
-		<a href="/clinton"><img src="static/clinton_circle.png" class="row_image"></a>
-		<a href="/trump"><img src="static/trump_circle.png" class="row_image"></a>
-	</div>
-	<p>The Trump Tweet Machine was created to give voters and spectators a window into the minds of the candidates for president of the United States.</p>
+.explain {
+    display:block;
+    margin: 20px 30px 10px;
+    text-align:center;
+}
+</style>
+<div class="row_images">
+    <div class="row_image">
+        <a href="/clinton"><img src="static/clintonlook.jpg">
+            <b><p>Generate Clinton Tweet</p></b>
+        </a>
+    </div>
+    <div class="row_image">
+        <a href="/trump"><img src="static/trumplook.jpg">
+            <b><p>Generate Trump Tweet</p></b>
+        </a>
+    </div>
+</div>
+<div class="explain">
+    <p>The Trump Tweet Machine was created to give voters and spectators a window into the minds of the candidates for president of the United States through their tweets.</p>
+    <p style="font-size:14px;">It uses a Markov chain generator to create new tweets in the style of each candidate by pulling words from original tweets. Users can see the original text and a collage of images returned by a google search for each tweet referenced, as well as a plot of the candidate's use of each word on Twitter.</p>
+</div>
 {% endblock %}
