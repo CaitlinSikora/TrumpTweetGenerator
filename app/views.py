@@ -1,7 +1,5 @@
 from flask import render_template, flash, redirect
 from app import app
-from .forms import LoginForm
-from .forms import Trumpinator
 from generateTrumpTweet import generate_tweet, print_stamps
 from trumpWords import find_word_data
 import pickle, random
