@@ -50,6 +50,14 @@
     margin: 20px 30px 10px;
     text-align:center;
 }
+/*.generate:hover::before {
+content: "\f099";
+font-family: FontAwesome;
+margin: 0 5px;
+}*/
+.fa-twitter {
+margin: 0 5px;
+}
 </style>
 
 <div id="fountainG">
@@ -57,12 +65,12 @@
 <div class="row_images">
     <div class="row_image">
         <a href="/clinton"><img src="static/clintonlook.jpg">
-            <b><p>Generate Clinton Tweet</p></b>
+            <b><p class="generate"><i class="fa fa-twitter" aria-hidden="true"></i>Generate Clinton Tweet</p></b>
         </a>
     </div>
     <div class="row_image">
         <a href="/trump"><img src="static/trumplook.jpg">
-            <b><p>Generate Trump Tweet</p></b>
+            <b><p class="generate"><i class="fa fa-twitter" aria-hidden="true"></i>Generate Trump Tweet</p></b>
         </a>
     </div>
 </div>
@@ -77,8 +85,8 @@
 //     $('.other_candidate').html('<p>Hear from me!</p><a href="/trump"><img src="static/trump_circle.png"></a>');
 // }
 $('.row_image').click(function(){
-    $('#fountainG').html('<div id="fountainG_1" class="fountainG"></div><div id="fountainG_8" class="fountainG"></div>');
-     $('#border').html('<hr>');
+    $('#fountainG').html('<IMG SRC="static/ajax-loader.gif" id="wheel1"><IMG SRC="static/ajax-loader.gif" id="wheel2">');
+    // $('.genertweet').attr("style", "border-radius:12px;");
 });
 </script>
 {% endblock %}
