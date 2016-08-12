@@ -5,6 +5,112 @@
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <style>
+
+
+@import "compass/css3";
+
+$speed: 2.5s;
+
+* {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  background: radial-gradient(#eee,#444);
+}
+
+.loader {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  width: 175px;
+  height: 100px;
+  span {
+    display: block;
+    background: #ccc;
+    width: 7px;
+    height: 10%;
+    border-radius: 14px;
+    margin-right: 5px;
+    float: left;
+    margin-top: 25%;
+    &:last-child {
+      margin-right: 0px;
+    }
+    &:nth-child(1) {
+      animation: load $speed 1.4s infinite linear;
+    }
+    &:nth-child(2) {
+      animation: load $speed 1.2s infinite linear;
+    }
+    &:nth-child(3) {
+      animation: load $speed 1s infinite linear;
+    }
+    &:nth-child(4) {
+      animation: load $speed 0.8s infinite linear;
+    }
+    &:nth-child(5) {
+      animation: load $speed 0.6s infinite linear;
+    }
+    &:nth-child(6) {
+      animation: load $speed 0.4s infinite linear;
+    }
+    &:nth-child(7) {
+      animation: load $speed 0.2s infinite linear;
+    }
+    &:nth-child(8) {
+      animation: load $speed 0s infinite linear;
+    }
+    &:nth-child(9) {
+      animation: load $speed 0.2s infinite linear;
+    }
+    &:nth-child(10) {
+      animation: load $speed 0.4s infinite linear;
+    }
+    &:nth-child(11) {
+      animation: load $speed 0.6s infinite linear;
+    }
+    &:nth-child(12) {
+      animation: load $speed 0.8s infinite linear;
+    }
+    &:nth-child(13) {
+      animation: load $speed 1s infinite linear;
+    }
+    &:nth-child(14) {
+      animation: load $speed 1.2s infinite linear;
+    }
+    &:nth-child(15) {
+      animation: load $speed 1.4s infinite linear;
+    }
+  }
+}
+
+@keyframes load {
+  0% {
+    background: #ccc;
+    margin-top: 25%;
+    height: 10%;
+  }
+  50% {
+    background: #444;
+    height: 100%;
+    margin-top: 0%;
+  }
+  100% {
+    background: #ccc;
+    height: 10%;
+    margin-top: 25%;
+  }
+}
       .axis path, .axis line
         {
             fill: none;
@@ -34,97 +140,25 @@
             z-index:999;
         }
 </style>
+<div class="loader">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 <svg id="visualisation" width="1000" height="360"></svg>
-<script>
-InitChart();
 
-function InitChart() {
-
-  var barData = {{ counts|tojson }};
-
-  var vis = d3.select('#visualisation'),
-    WIDTH = 1000,
-    HEIGHT = 360,
-    MARGINS = {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 50
-    },
-    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
-      return d.x;
-    })),
-
-
-    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-      d3.max(barData, function (d) {
-        return d.y;
-      })
-    ]),
-
-    xAxis = d3.svg.axis()
-	    .tickFormat(function(d) { 
-
-	                if(d%100==1){ 
-	                    return Math.floor(d/100)}
-
-	                else{ 
-	                    return }
-	            })    
-      .scale(xRange)
-      .tickSize(3)
-      .tickSubdivide(true)
-      .ticks(10),
-
-    yAxis = d3.svg.axis()
-      .scale(yRange)
-      .tickSize(3)
-      .orient("left")
-      .tickSubdivide(true);
-
-  vis.append("rect")
-    .attr("width", "100%")
-    .attr("height", "100%")
-    .attr("fill", "grey")
-    .attr({ry:'12', rx:'12'});
-
-  vis.append('svg:g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-    .call(xAxis);
-
-  vis.append('svg:g')
-    .attr('class', 'y axis')
-    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-    .call(yAxis);
-
-  vis.selectAll('rect')
-    .data(barData)
-    .enter()
-    .append('rect')
-    .attr('x', function (d) {
-      return xRange(d.x);
-    })
-    .attr('y', function (d) {
-      return yRange(d.y);
-    })
-    .attr('width', xRange.rangeBand())
-    .attr('height', function (d) {
-      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
-    })
-    .attr({ry:'3', rx:'3'})
-    .attr('fill', '#e1e1e1')
-    .on('mouseover',function(d){
-      d3.select(this)
-        .attr('fill','#a5a0a9');
-    })
-    .on('mouseout',function(d){
-      d3.select(this)
-        .attr('fill','#e1e1e1');
-    });
-
-}
-
-</script>
+<!--  -->
 
 {% endblock %}

@@ -12,7 +12,6 @@
     margin: 0 auto;
     padding: 3px 10px 3px 10px;
     opacity:0.7;
-    border-radius: 12px;
 }
 
 .row_image:hover {
@@ -21,10 +20,10 @@
 .row_image img {
     display: block;
     width: 360px;
-    max-height:300px;
+    height:360px;
     z-index: 1;
     margin: 5px;
-    border-radius: 12px;
+    border-radius: 50%;
 }
 .row_image p {
     display: block;
@@ -38,7 +37,7 @@
 }
 .row_images {
     white-space: nowrap;
-    margin: 60px 45px 60px;
+    margin: 40px 45px 40px;
     padding: 0 30px;
     position: relative;
     width: 100% max-width: 600px;
@@ -52,6 +51,9 @@
     text-align:center;
 }
 </style>
+
+<div id="fountainG">
+</div>
 <div class="row_images">
     <div class="row_image">
         <a href="/clinton"><img src="static/clintonlook.jpg">
@@ -68,4 +70,15 @@
     <p>The Trump Tweet Machine was created to give voters and spectators a window into the minds of the candidates for president of the United States through their tweets.</p>
     <p style="font-size:14px;">It uses a Markov chain generator to create new tweets in the style of each candidate by pulling words from original tweets. Users can see the original text and a collage of images returned by a google search for each tweet referenced, as well as a plot of the candidate's use of each word on Twitter.</p>
 </div>
+<script type="text/javascript">
+// if ("{{ candidate }}" == "Trump"){
+//     $('.other_candidate').html('<p>Hear from me!</p><a href="/clinton"><img src="static/clinton_circle.png"></a>');
+// } else {
+//     $('.other_candidate').html('<p>Hear from me!</p><a href="/trump"><img src="static/trump_circle.png"></a>');
+// }
+$('.row_image').click(function(){
+    $('#fountainG').html('<div id="fountainG_1" class="fountainG"></div><div id="fountainG_8" class="fountainG"></div>');
+     $('#border').html('<hr>');
+});
+</script>
 {% endblock %}

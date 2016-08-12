@@ -14,6 +14,12 @@ def index():
                            title='Presidential Tweet Machine',
                            slogan="Our most important decision, with the help of Twitter")
 
+@app.route('/vis')
+def vis():
+    return render_template('datavis.html',
+                           title='Presidential Tweet Machine',
+                           slogan="Our most important decision, with the help of Twitter")
+
 @app.route('/trump', methods=['GET', 'POST'])
 def trump():
     candidate = 'Trump'

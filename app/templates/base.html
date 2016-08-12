@@ -8,6 +8,180 @@
     <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,700' rel='stylesheet' type='text/css'>
     <script src="static/jquery.min.js"></script>
     <style>
+    #fountainG {
+        position: absolute;
+        width: 240px;
+        height: 29px;
+        margin: 0;
+        left: 347px;
+    }
+    
+    .fountainG {
+        position: absolute;
+        top: -102px;
+        left: 0px;
+        background-color: rgba(180, 180, 180, 0.38);
+        width: 15px;
+        height: 15px;
+        animation-name: bounce_fountainG;
+        -o-animation-name: bounce_fountainG;
+        -ms-animation-name: bounce_fountainG;
+        -webkit-animation-name: bounce_fountainG;
+        -moz-animation-name: bounce_fountainG;
+        animation-duration: 1.3s;
+        -o-animation-duration: 1.3s;
+        -ms-animation-duration: 1.3s;
+        -webkit-animation-duration: 1.3s;
+        -moz-animation-duration: 1.3s;
+        animation-iteration-count: infinite;
+        -o-animation-iteration-count: infinite;
+        -ms-animation-iteration-count: infinite;
+        -webkit-animation-iteration-count: infinite;
+        -moz-animation-iteration-count: infinite;
+        animation-direction: normal;
+        -o-animation-direction: normal;
+        -ms-animation-direction: normal;
+        -webkit-animation-direction: normal;
+        -moz-animation-direction: normal;
+        transform: scale(.3);
+        -o-transform: scale(.3);
+        -ms-transform: scale(.3);
+        -webkit-transform: scale(.3);
+        -moz-transform: scale(.3);
+        border-radius: 19px;
+        -o-border-radius: 19px;
+        -ms-border-radius: 19px;
+        -webkit-border-radius: 19px;
+        -moz-border-radius: 19px;
+    }
+    
+    #fountainG_1 {
+        left: 0;
+        animation-delay: 0.52s;
+        -o-animation-delay: 0.52s;
+        -ms-animation-delay: 0.52s;
+        -webkit-animation-delay: 0.52s;
+        -moz-animation-delay: 0.52s;
+    }
+    
+    #fountainG_2 {
+        left: 70px;
+        animation-delay: 0.65s;
+        -o-animation-delay: 0.65s;
+        -ms-animation-delay: 0.65s;
+        -webkit-animation-delay: 0.65s;
+        -moz-animation-delay: 0.65s;
+    }
+    
+    #fountainG_3 {
+        left: 140px;
+        animation-delay: 0.78s;
+        -o-animation-delay: 0.78s;
+        -ms-animation-delay: 0.78s;
+        -webkit-animation-delay: 0.78s;
+        -moz-animation-delay: 0.78s;
+    }
+    
+    #fountainG_4 {
+        left: 210px;
+        animation-delay: 0.91s;
+        -o-animation-delay: 0.91s;
+        -ms-animation-delay: 0.91s;
+        -webkit-animation-delay: 0.91s;
+        -moz-animation-delay: 0.91s;
+    }
+    
+    #fountainG_5 {
+        left: 280px;
+        animation-delay: 1.04s;
+        -o-animation-delay: 1.04s;
+        -ms-animation-delay: 1.04s;
+        -webkit-animation-delay: 1.04s;
+        -moz-animation-delay: 1.04s;
+    }
+    
+    #fountainG_6 {
+        left: 350px;
+        animation-delay: 1.17s;
+        -o-animation-delay: 1.17s;
+        -ms-animation-delay: 1.17s;
+        -webkit-animation-delay: 1.17s;
+        -moz-animation-delay: 1.17s;
+    }
+    
+    #fountainG_7 {
+        left: 420px;
+        animation-delay: 1.3s;
+        -o-animation-delay: 1.3s;
+        -ms-animation-delay: 1.3s;
+        -webkit-animation-delay: 1.3s;
+        -moz-animation-delay: 1.3s;
+    }
+    
+    #fountainG_8 {
+        left: 578px;
+        animation-delay: 1.43s;
+        -o-animation-delay: 1.0s;
+        -ms-animation-delay: 1.0s;
+        -webkit-animation-delay: 1.0s;
+        -moz-animation-delay: 1.0s;
+    }
+    
+    @keyframes bounce_fountainG {
+        0% {
+            transform: scale(1);
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+        100% {
+            transform: scale(.15);
+            background-color: rgb(255, 255, 255, 0);
+        }
+    }
+    
+    @-o-keyframes bounce_fountainG {
+        0% {
+            -o-transform: scale(1);
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+        100% {
+            -o-transform: scale(.15);
+            background-color: rgb(255, 255, 255, 0);
+        }
+    }
+    
+    @-ms-keyframes bounce_fountainG {
+        0% {
+            -ms-transform: scale(1);
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+        100% {
+            -ms-transform: scale(.15);
+            background-color: rgb(255, 255, 255, 0);
+        }
+    }
+    
+    @-webkit-keyframes bounce_fountainG {
+        0% {
+            -webkit-transform: scale(1);
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+        100% {
+            -webkit-transform: scale(.15);
+            background-color: rgb(255, 255, 255, 0);
+        }
+    }
+    
+    @-moz-keyframes bounce_fountainG {
+        0% {
+            -moz-transform: scale(1);
+            background-color: rgba(0, 0, 0, 0.25);
+        }
+        100% {
+            -moz-transform: scale(.15);
+            background-color: rgb(255, 255, 255, 0);
+        }
+    }
+    
     body {
         font-family: 'Fjalla One';
         margin: 0 auto;
@@ -31,9 +205,9 @@
         font-size: 50px;
         color: #aaaaaa;
         margin: 5px 0 0 0;
-        display:inline;
-        width:100%;
-        position:relative;
+        display: inline;
+        width: 100%;
+        position: relative;
     }
     
     h2 {
@@ -62,97 +236,112 @@
         stroke-width: 0.5;
         stroke-linecap: round;
     }
+    
     .other_candidate {
-    color: white;
-    font-size: 11px;
-    /*position: absolute;*/
-    display: inline;
-    /*top:0px;*/
-    text-align: center;
-    white-space: normal;
-}
-
-#clinton_click {
-    position: relative;
-    display: inline;
-    opacity: 0.4;
-    color: white;
-    font-size: 11px;
-    margin:16px;
-}
-
-#trump_click {
-    position: relative;
-    display: inline;
-    opacity: 0.4;
-    color: white;
-    font-size: 11px;
-    margin:16px;
-}
-#trump_click p {
-    text-align:center;
-  }
-  #clinton_click p {
-    text-align:center;
-  }
-#trump_click:hover {
-    color: #bbbbbb;
-    -webkit-transition: color 500ms ease-out;
-    -moz-transition: color 500ms ease-out;
-    -o-transition: color 500ms ease-out;
-    transition: color 500ms ease-out;
-}
-
-#clinton_click:hover {
-    color: #bbbbbb;
-    -webkit-transition: color 500ms ease-out;
-    -moz-transition: color 500ms ease-out;
-    -o-transition: color 500ms ease-out;
-    transition: color 500ms ease-out;
-}
-
-.other_candidate img {
-    width: 38px;
-    max-height: 38px;
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-    -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
-    -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
-    -o-transition: width 500ms ease-out, max-height 500ms ease-out;
-    transition: width 500ms ease-out, max-height 500ms ease-out;
-}
-
-.other_candidate img:hover {
-    -webkit-filter: grayscale(0%);
-    -moz-filter: grayscale(0%);
-    -o-filter: grayscale(0%);
-    width: 40px;
-    max-height: 40px;
-    -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
-    -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
-    -o-transition: width 500ms ease-out, max-height 500ms ease-out;
-    transition: width 500ms ease-out, max-height 500ms ease-out;
-}
+        color: white;
+        font-size: 11px;
+        /*position: absolute;*/
+        display: inline;
+        /*top:0px;*/
+        text-align: center;
+        white-space: normal;
+    }
+    
+    #clinton_click {
+        position: relative;
+        display: inline;
+        opacity: 0.4;
+        color: white;
+        font-size: 11px;
+        margin: 16px;
+    }
+    
+    #trump_click {
+        position: relative;
+        display: inline;
+        opacity: 0.4;
+        color: white;
+        font-size: 11px;
+        margin: 16px;
+    }
+    
+    #trump_click p {
+        text-align: center;
+    }
+    
+    #clinton_click p {
+        text-align: center;
+    }
+    
+    #trump_click:hover {
+        color: #bbbbbb;
+        -webkit-transition: color 500ms ease-out;
+        -moz-transition: color 500ms ease-out;
+        -o-transition: color 500ms ease-out;
+        transition: color 500ms ease-out;
+    }
+    
+    #clinton_click:hover {
+        color: #bbbbbb;
+        -webkit-transition: color 500ms ease-out;
+        -moz-transition: color 500ms ease-out;
+        -o-transition: color 500ms ease-out;
+        transition: color 500ms ease-out;
+    }
+    
+    .other_candidate img {
+        width: 38px;
+        max-height: 38px;
+        -webkit-filter: grayscale(100%);
+        -moz-filter: grayscale(100%);
+        -o-filter: grayscale(100%);
+        -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
+        -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
+        -o-transition: width 500ms ease-out, max-height 500ms ease-out;
+        transition: width 500ms ease-out, max-height 500ms ease-out;
+    }
+    
+    .other_candidate img:hover {
+        -webkit-filter: grayscale(0%);
+        -moz-filter: grayscale(0%);
+        -o-filter: grayscale(0%);
+        width: 40px;
+        max-height: 40px;
+        -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
+        -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
+        -o-transition: width 500ms ease-out, max-height 500ms ease-out;
+        transition: width 500ms ease-out, max-height 500ms ease-out;
+    }
+    
+    #border {
+        display: block;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+    }
     </style>
     <title>{{ title }}</title>
 </head>
 
 <body>
-  <h1>
-    <div id="clinton_click">
+    <h1>
+    <!-- <div id="clinton_click">
         <a href="/clinton">
             <div class="other_candidate"><img src="static/clinton_circle.png"></div>
         </a>
-    </div>
-    <a href="/index"><b>{{ title }}</b></a><div id="trump_click">
+    </div> -->
+    <a href="/index"><b>{{ title }}</b></a>
+    <!-- <div id="trump_click">
         <a href="/trump">
             <div class="other_candidate"><img src="static/trump_circle.png"></div>
         </a>
-    </div>
+    </div> -->
   </h1>
-  <hr>
-  <h2>{{ slogan }}</h2> {% block content %}{% endblock %}
+    <div id="border">
+        <hr>
+    </div>
+    <h2>{{ slogan }}</h2> {% block content %}{% endblock %}
 </body>
 
 </html>
