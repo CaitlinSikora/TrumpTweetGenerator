@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json, datetime, sys
 from nltk.tokenize import TweetTokenizer
 import collections

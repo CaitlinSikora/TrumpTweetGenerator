@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json, datetime
 from nltk.tokenize import TweetTokenizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
