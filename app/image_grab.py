@@ -9,7 +9,7 @@ from app import app
 search_engine_id = app.config['GOOGLE_KEYS']['search_engine_id']
 apis = app.config['GOOGLE_KEYS']['apis']
 
-def google_search(key_term, api, search_engine_id):
+def grab_images(key_term, api, search_engine_id):
     search_term = key_term
     num_requests = 1
     search_engine_id = search_engine_id
