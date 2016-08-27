@@ -77,10 +77,6 @@ def print_tweet(tweet,i):
 	print "Link: ",tweet.get("link")
 	print "\n" 
 
-out_name = 'static/HillaryClintonTest.json'
-with open(out_name, 'w') as outfile:
-	print "file works"
-
 driver = webdriver.Chrome('/Applications/chromedriver')
 driver.get('https://twitter.com/search?q=donald%20trump&src=typd')
 user = driver.find_element_by_class_name('LoginForm-username').find_element_by_tag_name('input')

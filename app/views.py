@@ -20,7 +20,7 @@ def vis():
 
 @app.route('/trump', methods=['GET', 'POST'])
 def trump():
-    candidate = 'Trump'
+    candidate = 'realDonaldTrump'
     new_tweet = generate_tweet(candidate,2009,2016)
     return render_template('tweet.html',
                            title='Trump Tweet Machine',
