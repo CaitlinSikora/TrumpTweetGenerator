@@ -8,7 +8,7 @@ import nltk.tag
 import collections
 import math, random
 from operator import itemgetter
-from image_grab import grab_wide, grab_widest, grab_images
+from image_grab import grab_wide, grab_widest
 
 def tokenize_tweet(tweet):
 	return TweetTokenizer().tokenize(tweet.lower())
@@ -98,7 +98,7 @@ def grab_links(key_words, candidate):
 							'static/trump5.jpg']}
 	links = []
 	for key_word in key_words:
-		new_link = grab_wide(grab_images(key_word))
+		new_link = grab_wide(key_word)
 		if new_link:
 			links.append(new_link)
 	if len(links)>0:

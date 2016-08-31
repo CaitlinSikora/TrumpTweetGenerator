@@ -9,7 +9,7 @@ from app import app
 search_engine_id = app.config['GOOGLE_KEYS']['search_engine_id']
 apis = app.config['GOOGLE_KEYS']['apis']
 
-def grab_images(key_term, api, search_engine_id):
+def google_search(key_term, api, search_engine_id):
     search_term = key_term
     num_requests = 1
     search_engine_id = search_engine_id
@@ -39,7 +39,7 @@ def try_keys(key_word,apis):
     for i,key in enumerate(apis):
         if not google:
             print "key", i
-            google = google_search(key_word,apis[i], search_engine_id)
+            google = google_search(key_word, apis[i], search_engine_id)
     return google
 
 def grab_widest(results):
@@ -51,7 +51,8 @@ def grab_widest(results):
           max_link = item['link']
     return max_link
 
-def grab_wide(results):
+def grab_wide(key_word):
+    results = try_keys(key_word,apis)
     if results == None:
         return None
     parsed = results
