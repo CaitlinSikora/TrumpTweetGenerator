@@ -1,0 +1,296 @@
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #e1e1e1;
+    stroke-width: 0.5;
+    /*stroke-dasharray: 1;*/
+    shape-rendering: crispEdges;
+    stroke-linecap: round;
+}
+
+.axis text {
+    fill: #e1e1e1;
+    stroke: none;
+    font-family: 'Fjalla One';
+    font-size: 10px;
+}
+
+.tick {
+    stroke: #e1e1e1;
+    /*stroke-dasharray: 1,2;*/
+}
+
+.bar {
+    fill: FireBrick;
+    border-radius: 1px;
+    border: 1px solid;
+    z-index: 999;
+}
+
+.plot_word {
+    opacity: 0.6;
+    height: auto;
+    left: 0;
+    min-width: 674px;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    background-size: cover;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.plot_word p {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: left;
+    opacity: 1;
+    font-size: 14px;
+    /*        z-index:99;
+*/
+}
+
+.plot_word h3 {
+    position: relative;
+    text-align: center;
+    display: inline;
+    vertical-align: middle;
+    line-height: 2;
+    font-size: 30px;
+    font-family: 'Fjalla One';
+    opacity: 1;
+    /*        z-index:99;
+*/
+}
+
+.word {
+    display: inline;
+    padding: 0px 1px 0px 1px;
+    max-width: 60%;
+    position: relative;
+    opacity: 0.85;
+    /*            z-index: 999;
+*/
+}
+
+.genertweet {
+    margin-right: auto!important;
+    margin-left: auto!important;
+    margin-top: 10px!important;
+    height: 400px!important;
+    padding: 10px!important;
+    display: inline-flex;
+    background-size: cover;
+    color: white;
+    overflow: hidden;
+    text-align: center;
+    width: 90%;
+    border-radius:12px!important; 
+}
+
+#genertext {
+    padding: 0px 130px 15px;
+    line-height: 1;
+    vertical-align: middle;
+    margin: auto;
+    z-index: 99;
+}
+
+.scrape_image {
+    z-index: 1;
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 auto;
+    padding: 0;
+    opacity: 0.5;
+    background-size: cover;
+}
+
+.genertweet p {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: white;
+    text-align: left;
+    opacity: 0.85;
+    /*        z-index:999;
+*/
+    font-size: 14px;
+}
+
+.genertweet h3 {
+    position: relative;
+    text-align: center;
+    display: inline;
+    vertical-align: middle;
+    line-height: 2;
+    font-size: 30px;
+    font-family: 'Fjalla One';
+    opacity: 0.85;
+    /*        z-index: 999;
+*/
+}
+
+.background_image {
+    height: auto;
+    left: 0;
+    margin: 0;
+    min-width: 674px;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    /*
+           z-index: -1;*/
+    background-size: cover;
+    border-radius: 12px;
+}
+
+.origtweet {
+    margin: 0px 25px 0px 25px;
+    line-height: 1.2;
+    display: inline;
+    font-size: 16px;
+}
+
+.origtweet p {
+    text-align: left;
+    margin: 7px 44px 0px 44px;
+}
+
+.origtweet span {
+    text-align: right;
+    margin: 0 10px;
+}
+
+.an_icon {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    margin: 5px;
+    display: inline;
+    opacity: 0.7;
+    z-index: 999;
+}
+
+.an_icon img {
+    width: 20px;
+    max-height: 20px;
+}
+
+#homeicon:hover {
+    opacity: 1;
+}
+
+#visualisation {
+    z-index: 999;
+}
+
+#chart_image {
+    display: block;
+}
+
+.other_candidate {
+    opacity: 0.7;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+}
+
+#clinton_click {
+    right: 55px;
+    top: 15px;
+    position: absolute;
+    margin: 3px;
+    display: inline;
+    opacity: 0.7;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+    max-width: 40px;
+    font-family: 'Playfair Display SC', serif;
+}
+
+#trump_click {
+    right: 15px;
+    top: 15px;
+    position: absolute;
+    margin: 3px;
+    display: inline;
+    opacity: 0.7;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+    max-width:40px;
+    font-family: 'Playfair Display SC', serif;
+}
+
+#home_click {
+    right: 95px;
+    top: 15px;
+    position: absolute;
+    margin: 3px;
+    display: inline;
+    opacity: 0.7;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+    max-width:40px;
+    font-family: 'Playfair Display SC', serif;
+}
+
+#home_click:hover {
+    color: #bbbbbb;
+    -webkit-transition: color 500ms ease-out;
+    -moz-transition: color 500ms ease-out;
+    -o-transition: color 500ms ease-out;
+    transition: color 500ms ease-out;
+}
+
+#trump_click:hover {
+    color: #bbbbbb;
+    -webkit-transition: color 500ms ease-out;
+    -moz-transition: color 500ms ease-out;
+    -o-transition: color 500ms ease-out;
+    transition: color 500ms ease-out;
+}
+
+#clinton_click:hover {
+    color: #bbbbbb;
+    -webkit-transition: color 500ms ease-out;
+    -moz-transition: color 500ms ease-out;
+    -o-transition: color 500ms ease-out;
+    transition: color 500ms ease-out;
+}
+
+.other_candidate img {
+    width: 34px;
+    max-height: 34px;
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
+    -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
+    -o-transition: width 500ms ease-out, max-height 500ms ease-out;
+    transition: width 500ms ease-out, max-height 500ms ease-out;
+}
+
+.other_candidate img:hover {
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    width: 40px;
+    max-height: 40px;
+    -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
+    -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
+    -o-transition: width 500ms ease-out, max-height 500ms ease-out;
+    transition: width 500ms ease-out, max-height 500ms ease-out;
+}

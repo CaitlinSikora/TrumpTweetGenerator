@@ -6,9 +6,11 @@ from googleapiclient.discovery import build
 from random import randint
 from app import app
 
+# Get the private google API data from config file.
 search_engine_id = app.config['GOOGLE_KEYS']['search_engine_id']
 apis = app.config['GOOGLE_KEYS']['apis']
 
+# Search for the key terms
 def google_search(key_term, api, search_engine_id):
     search_term = key_term
     num_requests = 1
@@ -32,6 +34,7 @@ def google_search(key_term, api, search_engine_id):
     except:
         return None
 
+# Try API keys
 def try_keys(key_word,apis):
     apis = apis
     print "Searched", key_word
@@ -42,6 +45,7 @@ def try_keys(key_word,apis):
             google = google_search(key_word, apis[i], search_engine_id)
     return google
 
+# Grab the widest image
 def grab_widest(results):
     parsed = results
     max_aspect_ratio = 0
@@ -70,5 +74,4 @@ def grab_wide(key_word):
             return links[ind]
     else:
         return None
-#GET https://www.googleapis.com/customsearch/v1?q={search_word}&cref=https%3A%2F%2Fcse.google.com%3A443%2Fcse%2Fpublicurl%3Fcx%3D015037131198447628591%3A7g7ithuxakq&cx=015037131198447628591%3A7g7ithuxakq&imgSize=xlarge&safe=off&searchType=image&key={MY_API_KEY}
 

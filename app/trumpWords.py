@@ -10,34 +10,40 @@ import math, random
 from operator import itemgetter
 from image_grab import grab_wide, grab_widest
 
+# A function to tokenize tweets
 def tokenize_tweet(tweet):
 	return TweetTokenizer().tokenize(tweet.lower())
 
-def find_word_data(key_word,candidate,word_data):
+# A function to get the counts of a word over all the candidates tweets
+def find_word_data(key_word,candidate,dict_words):
+	# Process the word
 	key_word = key_word.lower().replace(":", "").replace(".", "").replace(",", "").replace("?", "").replace("!", "").replace('"', '')
-	# file_name = 'app/static/'+candidate+'WordsDict.json'
-	# with open(file_name,'r') as f:
-	# 	data = f.read()
-	# dict_words = json.loads(data)
-	dict_words = word_data
+	# Create the counter
 	count_dates = collections.Counter()
+
+	# Look for the word
 	if key_word in dict_words:
+		# Sort the date entries for the word
 		word_entries = sorted(dict_words[key_word], key=itemgetter('date_ind'))
+		# Count the number of instances for each date ind (representing weeks)
 		count_dates.update([item['date_ind'] for item in word_entries])
 		new_list=[]
+		# Go through all of the weeks and add the count for the word for each week
 		for j in range(1,13):
 			for i in range(2009,2017):
 				date = j+(100*i)
 				if date in count_dates:
-					new_list.append({'x':date,'y':count_dates[date],'date':'a_Date'})
+					new_list.append({'x':date,'y':count_dates[date]})
 				else:
-					new_list.append({'x':date,'y':0,'date':'a_Date'})
+					new_list.append({'x':date,'y':0})
 		new_list = sorted(new_list, key=itemgetter('x'))
+		# Return the total count and the list for the plot
 		return len(dict_words[key_word]), new_list
 	else:
 		return
 
-def find_unique_words(tweet,candidate,word_data):
+# Find the Google Image search terms from each tweet
+def find_unique_words(tweet,candidate,dict_words):
 	toktweet = tokenize_tweet(tweet)
 	pos_tagged = nltk.pos_tag(tweet.split())
 	#print pos_tagged
@@ -49,11 +55,6 @@ def find_unique_words(tweet,candidate,word_data):
 	propernouns = [tokenize_tweet(word.lower())[0] for word,pos in pos_tagged if pos == 'NNP']
 	#print propernouns
 	
-	# file_name = 'app/static/'+candidate+'WordsDict.json'
-	# with open(file_name,'r') as f:
-	# 	data = f.read()
-	# dict_words = json.loads(data)
-	dict_words=word_data
 	count_occur = collections.Counter()
 	count_occur.update(toktweet)
 	unique = {}
@@ -85,6 +86,7 @@ def find_unique_words(tweet,candidate,word_data):
 	print final_list
 	return [item[0] for i,item in enumerate(final_list) if i<2 or item[1]>1]
 
+# Get links for the images in the background
 def grab_links(key_words, candidate):
 	back_up_links = {'HillaryClinton':['static/clinton4.jpg',
 										'static/clinton.jpg',
@@ -96,17 +98,15 @@ def grab_links(key_words, candidate):
 							'static/trump3.jpg',
 							'static/trump4.jpg',
 							'static/trump5.jpg']}
+
+	# Call grab_wide, which calls the function to do the search and selects the widest of the links
 	links = []
 	for key_word in key_words:
 		new_link = grab_wide(key_word)
 		if new_link:
 			links.append(new_link)
-	if len(links)>0:
-		return links
-	else:
+	# If no links were found, choose a random backup image
+	if len(links)==0:
 		index = random.randint(0,4)
 		links.append(back_up_links[candidate][index])
-		return links
-
-'''weeks = count_dates.keys()
-instances = [count_dates[week] for week in weeks]'''
+	return links

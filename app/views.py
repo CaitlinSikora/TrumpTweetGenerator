@@ -12,30 +12,37 @@ def index():
                            title='Presidential Tweet Machine',
                            slogan="Our most important decision, with the help of Twitter")
 
-@app.route('/vis')
-def vis():
-    return render_template('datavis.html',
-                           title='Presidential Tweet Machine',
-                           slogan="Our most important decision, with the help of Twitter")
-
 @app.route('/trump', methods=['GET', 'POST'])
 def trump():
     candidate = 'realDonaldTrump'
-    new_tweet = generate_tweet(candidate,2009,2016)
-    return render_template('tweet.html',
-                           title='Trump Tweet Machine',
-                           slogan='Making America great again, one tweet at a time',
-                           candidate='Trump',
-                           tweet=new_tweet[0], 
-                           references=new_tweet[1],
-                           num_ref = new_tweet[2],
-                           counts= new_tweet[3],
-                           back_img = ['static/trump.jpg','static/trump2.jpg','static/trump3.jpg','static/trump4.jpg','static/trump5.jpg'])
+    new_tweet = None
+    while not new_tweet:
+      try:
+        new_tweet = generate_tweet(candidate,2009,2016)
+      except:
+        #eh 
+        pass
+      return render_template('tweet.html',
+                             title='Trump Tweet Machine',
+                             slogan='Making America great again, one tweet at a time',
+                             candidate='Trump',
+                             tweet=new_tweet[0], 
+                             references=new_tweet[1],
+                             num_ref = new_tweet[2],
+                             counts= new_tweet[3],
+                             back_img = ['static/trump.jpg','static/trump2.jpg','static/trump3.jpg','static/trump4.jpg','static/trump5.jpg'])
 
 @app.route('/clinton', methods=['GET', 'POST'])
 def clinton():
+    print "called clinton"
     candidate = 'HillaryClinton'
-    new_tweet = generate_tweet(candidate,2013,2016)
+    new_tweet = None
+    while not new_tweet:
+      try:
+        new_tweet = generate_tweet(candidate,2013,2016)
+      except:
+        #eh 
+        pass
     return render_template('tweet.html',
                            title='Clinton Tweet Machine',
                            candidate='Clinton',

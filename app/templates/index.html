@@ -1,68 +1,10 @@
 <!-- extend base layout -->
 {% extends "base.html" %} {% block content %}
-<style>
-.row_image {
-    white-space: normal;
-    color: white;
-    text-align: center;
-    vertical-align: middle;
-    position: relative;
-    display: inline-block;
-    width: 50% max-width: 180px;
-    margin: 0 auto;
-    padding: 3px 10px 3px 10px;
-    opacity:0.7;
-}
+<link rel="stylesheet" href="static/home.css"/>
 
-.row_image:hover {
-    opacity:0.9;
-}
-.row_image img {
-    display: block;
-    width: 360px;
-    height:360px;
-    z-index: 1;
-    margin: 5px;
-    border-radius: 50%;
-}
-.row_image p {
-    display: block;
-    position: relative;
-    text-align: center;
-    display: inline;
-    vertical-align: middle;
-    z-index: 99;
-    color: #aaaaaa;
-    font-family: 'Playfair Display SC', serif;
-}
-.row_images {
-    white-space: nowrap;
-    margin: 40px 45px 40px;
-    padding: 0 30px;
-    position: relative;
-    width: 100% max-width: 600px;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.explain {
-    display:block;
-    margin: 20px 30px 10px;
-    text-align:center;
-}
-/*.generate:hover::before {
-content: "\f099";
-font-family: FontAwesome;
-margin: 0 5px;
-}*/
-.fa-twitter {
-margin: 0 5px;
-}
-</style>
-
-<div id="fountainG">
+<!-- <div id="fountainG">
 </div>
-<div class="row_images">
+ --><div class="row_images">
     <div class="row_image">
         <a href="/clinton"><img src="static/clintonlook.jpg">
             <b><p class="generate"><i class="fa fa-twitter" aria-hidden="true"></i>Generate Clinton Tweet</p></b>
@@ -79,14 +21,8 @@ margin: 0 5px;
     <p style="font-size:14px;">It uses a Markov chain generator to create new tweets in the style of each candidate by pulling words from original tweets. Users can see the original text and a collage of images returned by a google search for each tweet referenced, as well as a plot of the candidate's use of each word on Twitter.</p>
 </div>
 <script type="text/javascript">
-// if ("{{ candidate }}" == "Trump"){
-//     $('.other_candidate').html('<p>Hear from me!</p><a href="/clinton"><img src="static/clinton_circle.png"></a>');
-// } else {
-//     $('.other_candidate').html('<p>Hear from me!</p><a href="/trump"><img src="static/trump_circle.png"></a>');
-// }
 $('.row_image').click(function(){
-    $('#fountainG').html('<IMG SRC="static/ajax-loader.gif" id="wheel1"><IMG SRC="static/ajax-loader.gif" id="wheel2">');
-    // $('.genertweet').attr("style", "border-radius:12px;");
+     $('.wheel').show();
 });
 </script>
 {% endblock %}

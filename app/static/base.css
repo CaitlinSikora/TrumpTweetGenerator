@@ -1,0 +1,144 @@
+    
+    .wheel {
+        display:none;
+    }
+    
+    
+    body {
+        font-family: 'Fjalla One';
+        margin: 0 auto;
+        color: #bbbbbb;
+        max-width: 90%;
+        display: block;
+        text-align: center;
+    }
+    
+    div {
+        background-size: cover;
+        position: relative;
+        margin: 40px 0 40px 0;
+        border-radius: 12px;
+    }
+    
+    h1 {
+        white-space: nowrap;
+        font-family: 'Playfair Display SC', serif;
+        text-align: center;
+        font-size: 50px;
+        color: #aaaaaa;
+        margin: 5px 0 0 0;
+        display: inline;
+        width: 100%;
+        position: relative;
+    }
+    
+    h2 {
+        text-align: center;
+        color: #bbbbbb;
+        margin: 7px 0 20px 0;
+        font-family: 'Fjalla One';
+        font-size: 20px;
+    }
+    
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+    
+    hr {
+        display: inline-block;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+        border-width: 1px;
+        border-style: double;
+        color: #bbbbbb;
+        width: 50%;
+        stroke-width: 0.5;
+        stroke-linecap: round;
+    }
+    
+    .other_candidate {
+        color: white;
+        font-size: 11px;
+        /*position: absolute;*/
+        display: inline;
+        /*top:0px;*/
+        text-align: center;
+        white-space: normal;
+    }
+    
+    #clinton_click {
+        position: relative;
+        display: inline;
+        opacity: 0.4;
+        color: white;
+        font-size: 11px;
+        margin: 16px;
+    }
+    
+    #trump_click {
+        position: relative;
+        display: inline;
+        opacity: 0.4;
+        color: white;
+        font-size: 11px;
+        margin: 16px;
+    }
+    
+    #trump_click p {
+        text-align: center;
+    }
+    
+    #clinton_click p {
+        text-align: center;
+    }
+    
+    #trump_click:hover {
+        color: #bbbbbb;
+        -webkit-transition: color 500ms ease-out;
+        -moz-transition: color 500ms ease-out;
+        -o-transition: color 500ms ease-out;
+        transition: color 500ms ease-out;
+    }
+    
+    #clinton_click:hover {
+        color: #bbbbbb;
+        -webkit-transition: color 500ms ease-out;
+        -moz-transition: color 500ms ease-out;
+        -o-transition: color 500ms ease-out;
+        transition: color 500ms ease-out;
+    }
+    
+    .other_candidate img {
+        width: 38px;
+        max-height: 38px;
+        -webkit-filter: grayscale(100%);
+        -moz-filter: grayscale(100%);
+        -o-filter: grayscale(100%);
+        -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
+        -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
+        -o-transition: width 500ms ease-out, max-height 500ms ease-out;
+        transition: width 500ms ease-out, max-height 500ms ease-out;
+    }
+    
+    .other_candidate img:hover {
+        -webkit-filter: grayscale(0%);
+        -moz-filter: grayscale(0%);
+        -o-filter: grayscale(0%);
+        width: 40px;
+        max-height: 40px;
+        -webkit-transition: width 500ms ease-out, max-height 500ms ease-out;
+        -moz-transition: width 500ms ease-out, max-height 500ms ease-out;
+        -o-transition: width 500ms ease-out, max-height 500ms ease-out;
+        transition: width 500ms ease-out, max-height 500ms ease-out;
+    }
+    
+    #border {
+        display: block;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        margin-left: auto;
+        margin-right: auto;
+    }
